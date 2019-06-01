@@ -22,7 +22,7 @@ This app is still in a very alpha stage.
 - Integrate with gitlab's webhook
 - Integrate into part of CD process
 ### Testing
-- Functional test on the app with nock
+- Unit test on the app with nock
 
 ### Documentation 
 - WIP
@@ -33,3 +33,6 @@ This app is still in a very alpha stage.
 - WIP
 ### Part of the CD process
 - WIP
+
+## Credits
+Thanks to [github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator) for inspiring me to make this app. Sorry, I couldn't wait any longer for that gitlab feature to be merged in.
