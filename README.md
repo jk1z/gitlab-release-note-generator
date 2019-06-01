@@ -1,5 +1,5 @@
 # GitLab Changelog Generator
-This app is still in a very alpha stage.
+GitLab changelog generator based on merge requests and issues
 
 ## Feature
 -  Create release note (changelog) on the latest Tag
