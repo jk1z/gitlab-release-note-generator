@@ -28,6 +28,7 @@
 
 const _ = require("lodash");
 const Gitlab = require("../adapters/gitlab");
+const Logger = require("../logger");
 
 // {
 //     "id": 3,
@@ -139,7 +140,7 @@ const Gitlab = require("../adapters/gitlab");
 // }
 // }
 exports.getDateRangeFromLatestAndSecondLatestTagByProjectId = async (projectId) => { // TODO: Add regex option to test the tags?
-    let tags = await Gitlab.searchTagsByProjectId(projectId);
+    let {tags} = await Gitlab.searchTagsByProjectId(projectId);
     // Only get the latest and second latest one
     if (!_.isEmpty(tags)) {
         if (tags.length === 1){
@@ -156,13 +157,19 @@ exports.getDateRangeFromLatestAndSecondLatestTagByProjectId = async (projectId) 
 };
 
 exports.getLatestTagByProjectId = async (projectId) => {
-    const tags = await Gitlab.searchTagsByProjectId(projectId);
+    const {tags} = await Gitlab.searchTagsByProjectId(projectId);
     if (!_.isEmpty(tags)){
         return tags[0];
     }
     return null;
 };
 
-exports.createTagDescriptionByProjectIdAndTagName = async (projectId, tagName, description) => {
-    return Gitlab.createTagReleaseByProjectIdTagNameAndTagId(projectId, tagName, {description})
+exports.upsertTagDescriptionByProjectIdAndTag = async (projectId, tag, description) => {
+    if (_.get(tag, "release.description")){
+        Logger.debug(`Updating the release note`);
+        return Gitlab.updateTagReleaseByProjectIdTagNameAndTagId(projectId, tag.name, {description})
+    } else {
+      Logger.debug(`Creating a new release note`);
+        return Gitlab.createTagReleaseByProjectIdTagNameAndTagId(projectId, tag.name, {description})
+    }
 };

@@ -1,10 +1,11 @@
 const Env = require("./env");
 const Generator = require("./lib/generator");
+const Logger = require("./logger");
 
 (async () => {
     try{
         await Generator.generate();
     } catch(err) {
-        console.log(err);
+        Logger.error(err);
     }
 })();

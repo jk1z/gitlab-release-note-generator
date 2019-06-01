@@ -1,5 +1,17 @@
 # GitLab Changelog Generator
-This app is still in very alpha stage.
+This app is still in a very alpha stage.
+
+## Feature
+-  Create release note (changelog) on the latest Tag
+
+## Software requirement
+- NodeJS 10.15.3
+
+## How to run this app
+- Fill in the parameter in the env.js, or feed it in process.env through npm
+- npm install
+- npm start
+- After couple second, latest tag should have a changelog
 
 ## TODO:
 ### Feature

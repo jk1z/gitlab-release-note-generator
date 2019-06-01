@@ -1,25 +1,26 @@
 const IssueLib = require("./issue");
 const MergeRequestLib = require("./mergeRequest");
 const TagLib = require("./tag");
+const ChangelogLib = require("./changelog");
+const Logger = require("../logger");
+const Moment = require("moment-timezone");
 const Env = require("../env");
 
 exports.generate = async () => {
     const latestTag = await TagLib.getLatestTagByProjectId(Env.GITLAB_PROJECT_ID);
-    if (latestTag) {
-        const [startDate, endDate] = await TagLib.getDateRangeFromLatestAndSecondLatestTagByProjectId(Env.GITLAB_PROJECT_ID);
-        const mergeRequests = await MergeRequestLib.getMergeRequestByProjectIdStateStartDateAndEndDate(Env.GITLAB_PROJECT_ID, "merged", startDate, endDate);
-        const issues = await IssueLib.searchIssuesByProjectIdStateStartDateAndEndDate(Env.GITLAB_PROJECT_ID, "closed", startDate, endDate);
-        const changeLog = createChangeLog({issues, mergeRequests});
-        return await TagLib.createTagDescriptionByProjectIdAndTagName(Env.GITLAB_PROJECT_ID, latestTag.name, changeLog);
-    } else {
-        console.warn("No tags found in the project");
-    }
-};
 
-const createChangeLog = ({issues, mergeRequests}) => {
-    return `#### Closed issues\n${issues.map(issue => {
-    return `- ${IssueLib.formatIssue(issue)}\n`
-    })}#### Merged merge requests\n${mergeRequests.map(mergeRequest => {
-        return `- ${MergeRequestLib.formatMergeRequest(mergeRequest)}\n`
-    })}`;
+    if (latestTag) {
+        Logger.info(`Latest tag is ${latestTag.name}`);
+        const [startDate, endDate] = await TagLib.getDateRangeFromLatestAndSecondLatestTagByProjectId(Env.GITLAB_PROJECT_ID);
+        Logger.info(`Time range that we are looking at MRs and issues is between ${startDate} and ${endDate}`);
+        const mergeRequests = await MergeRequestLib.getMergeRequestByProjectIdStateStartDateAndEndDate(Env.GITLAB_PROJECT_ID, "merged", startDate, endDate);
+        Logger.info(`Found ${mergeRequests ? mergeRequests.length : 0} merge requests`);
+        const issues = await IssueLib.searchIssuesByProjectIdStateStartDateAndEndDate(Env.GITLAB_PROJECT_ID, "closed", startDate, endDate);
+        Logger.info(`Found ${issues ? issues.length : 0} merge requests`);
+        const changeLog = ChangelogLib.createChangeLog({issues, mergeRequests});
+        Logger.debug(`Changelog: ${changeLog}`);
+        return await TagLib.upsertTagDescriptionByProjectIdAndTag(Env.GITLAB_PROJECT_ID, latestTag, changeLog);
+    } else {
+        Logger.warn(`No tags found in the project ${Env.GITLAB_PROJECT_ID}`);
+    }
 };

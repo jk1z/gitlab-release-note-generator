@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint app/**/*"
   },
   "repository": {
     "type": "git",
@@ -17,8 +18,15 @@
   },
   "homepage": "https://github.com/zZFreezyZz/GitLab-Changelog-Generator#readme",
   "dependencies": {
+    "chalk": "2.4.2",
     "lodash": "4.17.11",
+    "moment-timezone": "0.5.25",
+    "parse-link-header": "1.0.1",
     "request": "2.88.0",
     "request-promise-native": "1.0.7"
+  },
+  "devDependencies": {
+    "eslint": "5.16.0",
+    "prettier": "1.17.1"
   }
 }
