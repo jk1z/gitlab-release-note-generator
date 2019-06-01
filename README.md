@@ -12,6 +12,7 @@ GitLab changelog generator based on merge requests and issues
 - npm install
 - npm start
 - After couple second, latest tag should have a changelog
+![](https://dl3.pushbulletusercontent.com/HIav5xaHjcerMtkHT3myQLnl5C9g1UP3/Screen%20Shot%202019-06-01%20at%204.27.18%20pm.png)
 
 ## TODO:
 ### Feature
