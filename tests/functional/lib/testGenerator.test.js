@@ -325,9 +325,10 @@ describe("Generator lib", () => {
         );
       // Mock release api
       Nock(Env.GITLAB_API_ENDPOINT)
-        .put(`/projects/${Env.GITLAB_PROJECT_ID}/repository/tags/v1.0.0/release`, "{\"description\":\"#### Closed issues\\n- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)\\n#### Merged merge requests\\n- test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))\\n\"}")
+        .put(`/projects/${Env.GITLAB_PROJECT_ID}/repository/tags/v1.0.0/release`, "{\"description\":\"### Release note (2012-05-27)\\n#### Closed issues\\n- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)\\n#### Merged merge requests\\n- test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))\\n\"}")
         .reply(200,
-          { "tagName": "1.0.0", "description": `#### Closed issues
+          { "tagName": "1.0.0", "description": `### Release note (2012-05-27)
+#### Closed issues
 - Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)
 #### Merged merge requests
 - test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))
@@ -342,7 +343,8 @@ describe("Generator lib", () => {
       });
       test("should give update tag response", () => {
         expect(result.tagName).toBe("1.0.0");
-        expect(result.description).toBe(`#### Closed issues
+        expect(result.description).toBe(`### Release note (2012-05-27)
+#### Closed issues
 - Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)
 #### Merged merge requests
 - test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))

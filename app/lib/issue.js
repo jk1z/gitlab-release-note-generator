@@ -11,6 +11,6 @@ exports.searchIssuesByProjectIdStateStartDateAndEndDate = async (projectId, stat
   return issues;
 };
 
-exports.formatIssue = (issue) => {
+exports.format = (issue) => {
   return `${issue.title} [#${issue.iid}](${issue.web_url})`;
 };
