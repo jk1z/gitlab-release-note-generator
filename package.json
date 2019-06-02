@@ -1,5 +1,5 @@
 {
-  "name": "gitlab-changelog-generator",
+  "name": "gitlab-release-note-generator",
   "version": "0.0.2-2",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jk1z/GitLab-Changelog-Generator.git"
+    "url": "git+https://github.com/jk1z/GitLab-Release-Note-Generator.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jk1z/GitLab-Changelog-Generator/issues"
+    "url": "https://github.com/jk1z/GitLab-Release-Note-Generator/issues"
   },
-  "homepage": "https://github.com/jk1z/GitLab-Changelog-Generator#readme",
+  "homepage": "https://github.com/jk1z/GitLab-Release-Note-Generator#readme",
   "dependencies": {
     "chalk": "2.4.2",
     "lodash": "4.17.11",
