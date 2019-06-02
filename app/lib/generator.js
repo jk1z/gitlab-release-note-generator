@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const IssueLib = require("./issue");
 const MergeRequestLib = require("./mergeRequest");
 const TagLib = require("./tag");
@@ -16,7 +17,7 @@ exports.generate = async () => {
         Logger.info(`Found ${mergeRequests ? mergeRequests.length : 0} merge requests`);
         const issues = await IssueLib.searchIssuesByProjectIdStateStartDateAndEndDate(Env.GITLAB_PROJECT_ID, "closed", startDate, endDate);
         Logger.info(`Found ${issues ? issues.length : 0} merge requests`);
-        const changeLog = ChangelogLib.createChangeLog({issues, mergeRequests});
+        const changeLog = ChangelogLib.createChangeLog({releaseDate: _.get(latestTag, "commit.committed_date", Moment.tz(Env.TZ)),issues, mergeRequests});
         Logger.debug(`Changelog: ${changeLog}`);
         return await TagLib.upsertTagDescriptionByProjectIdAndTag(Env.GITLAB_PROJECT_ID, latestTag, changeLog);
     } else {

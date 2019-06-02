@@ -13,7 +13,7 @@ exports.getMergeRequestByProjectIdStateStartDateAndEndDate = async (projectId, s
     return mergeRequests;
 };
 
-exports.formatMergeRequest = (mergeRequest) => {
+exports.format = (mergeRequest) => {
     // Sample: Sample MR #1 (username)
     return `${mergeRequest.title} [#${mergeRequest.iid}](${mergeRequest.web_url}) ([${_.get(mergeRequest, "author.username")}](${_.get(mergeRequest, "author.web_url")}))`
 };
