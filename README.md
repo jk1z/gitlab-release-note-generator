@@ -3,7 +3,7 @@ A Gitlab release note generator that generates release note on latest tag
 
 ## Feature
 -  Generate release note on the latest Tag based on merge requests and issues
--  Issues or merge requests that has these following labels (enhancement, breaking change, feature and bug) now has its own distinguished title in the release notes (Note. if an issue or merge request that has 2 or more labels, that issue or merge request will be displayed again under the corresponding title) 
+-  Issues or merge requests that have these following labels (enhancement, breaking change, feature and bug) now has its distinguished title in the release notes (Note. if an issue or merge request that has 2 or more labels, that issue or merge request will be displayed again under the corresponding title) 
 
 ## Software requirement
 - NodeJS ^10.x.x
