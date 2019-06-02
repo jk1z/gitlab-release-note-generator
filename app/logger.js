@@ -14,3 +14,7 @@ exports.warn = (message) => {
 exports.error = (message) => {
     console.log(Chalk.redBright(`${Moment.tz(Env.TZ).format()} [ERROR] ${message}`));
 };
+
+if (process.env.NODE_ENV === "test"){
+    console.log = () => {};
+}

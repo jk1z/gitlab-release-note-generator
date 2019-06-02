@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zZFreezyZz/GitLab-Changelog-Generator.git"
+    "url": "git+https://github.com/jk1z/GitLab-Changelog-Generator.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zZFreezyZz/GitLab-Changelog-Generator/issues"
+    "url": "https://github.com/jk1z/GitLab-Changelog-Generator/issues"
   },
-  "homepage": "https://github.com/zZFreezyZz/GitLab-Changelog-Generator#readme",
+  "homepage": "https://github.com/jk1z/GitLab-Changelog-Generator#readme",
   "dependencies": {
     "chalk": "2.4.2",
     "lodash": "4.17.11",
@@ -26,7 +26,11 @@
     "request-promise-native": "1.0.7"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.13",
     "eslint": "5.16.0",
+    "jest": "^24.8.0",
+    "mockdate": "^2.0.2",
+    "nock": "^10.0.6",
     "prettier": "1.17.1"
   }
 }

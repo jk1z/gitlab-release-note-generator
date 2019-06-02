@@ -1,4 +1,3 @@
-const Env = require("./env");
 const Generator = require("./lib/generator");
 const Logger = require("./logger");
 

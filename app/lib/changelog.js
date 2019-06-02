@@ -1,7 +1,6 @@
 const IssueLib = require("./issue");
 const MergeRequestLib = require("./mergeRequest");
 
-
 exports.createChangeLog = ({issues, mergeRequests}) => {
     return `#### Closed issues\n${issues.map(issue => {
         return `- ${IssueLib.formatIssue(issue)}\n`
