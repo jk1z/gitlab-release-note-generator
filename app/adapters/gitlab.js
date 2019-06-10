@@ -61,6 +61,11 @@ exports.getCommitByProjectIdAndSha = async (projectId, sha) => {
     return Request({uri: `${Env.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/commits/${sha}`, ...options});
 };
 
+exports.findCommitRefsByProjectIdAndSha = async (projectId, sha, query) => {
+    const queryString = query ? QueryString.stringify(query) : null;
+    return Request({uri: `${Env.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/commits/${sha}/refs${queryString ? `?${queryString}` : ""}`, ...options});
+};
+
 exports.createTagReleaseByProjectIdTagNameAndTagId = async (projectId, tagName, body) => {
     return Request({uri: `${Env.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/tags/${tagName}/release`, method: "POST", body, ...options});
 };

@@ -1,20 +1,51 @@
 const _ = require("lodash");
 const Gitlab = require("../adapters/gitlab");
 const Logger = require("../logger");
+const Commit = require("./commit");
 
-exports.getDateRangeFromLatestAndSecondLatestTagByProjectId = async (projectId) => { // TODO: Add regex option to test the tags?
-    let {tags} = await Gitlab.searchTagsByProjectId(projectId);
-    // Only get the latest and second latest one
+exports.getLatestAndSecondLatestTagByProjectId = async (projectId) => { // TODO: Add regex option to test the tags?
+    let {tags, _link} = await Gitlab.searchTagsByProjectId(projectId);
+    // Only get the latest and second latest one from the same branch
     if (!_.isEmpty(tags)) {
         if (tags.length === 1){
+            const latestTag = tags.shift();
             const project = await Gitlab.getRepoByProjectId(projectId);
-            return [_.get(tags[0], "commit.committed_date"), project.created_at]
+            Logger.info(`Latest tag is ${latestTag.name}`);
+            return [latestTag, {commit: {committed_date : project.created_at}}];
         } else {
-            tags = tags.slice(0, 2);
-            return tags.map((tag) => {
-                return _.get(tag, "commit.committed_date");
-            });
+            const latestTag = tags.shift();
+            const latestTagBranches = await Commit.findBranchRefsByProjectIdAndSha(projectId, latestTag.commit.id);
+            Logger.info(`Latest tag is ${latestTag.name}`);
+            let secondLatestTag;
+            let res = tags;
+            let page = 0;
+            do {
+                Logger.debug(`Searching on page ${page + 1}`);
+                for (const tag of tags){
+                    const branches = await Commit.findBranchRefsByProjectIdAndSha(projectId, tag.commit.id);
+                    const commonBranches = _.intersectionWith(latestTagBranches, branches, _.isEqual);
+                    if (!_.isEmpty(commonBranches)){
+                        secondLatestTag = tag;
+                        break;
+                    }
+                }
+                if (secondLatestTag) {
+                    Logger.info(`Found the second latest tag on page ${page + 1}. The second latest tag is ${secondLatestTag.name}`);
+                    break;
+                } else {
+                    res = await _link.next();
+                    _link = res._link;
+                    page++;
+                }
+            } while (_.get(_link, "next"));
+            if (latestTag && secondLatestTag) {
+                return [latestTag, secondLatestTag];
+            } else {
+                Logger.error("Cannot find the second latest tag on the same branch.");
+            }
         }
+    } else {
+        Logger.error("Cannot find any tags");
     }
     return [];
 };

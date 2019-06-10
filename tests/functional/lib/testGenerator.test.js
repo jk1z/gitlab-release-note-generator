@@ -334,6 +334,14 @@ describe("Generator lib", () => {
 - test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))
 ` }
         );
+      // Mock commit api
+      // Nock(Env.GITLAB_API_ENDPOINT)
+      //   .get(`/projects/${Env.GITLAB_PROJECT_ID}/repository/commits/2695effb5807a22ff3d138d593fd856244e155e7/refs`)
+      //   .query({type: "branch"})
+      //   .reply(200, [
+      //     {"type": "branch", "name": "develop"},
+      //     {"type": "tag", "name": "v1.1.0"}
+      //   ]);
     };
 
     describe("Sunny scenario", () => {

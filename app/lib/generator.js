@@ -8,19 +8,19 @@ const Moment = require("moment-timezone");
 const Env = require("../env");
 
 exports.generate = async () => {
-    const latestTag = await TagLib.getLatestTagByProjectId(Env.GITLAB_PROJECT_ID);
-    if (latestTag) {
-        Logger.info(`Latest tag is ${latestTag.name}`);
-        const [endDate, startDate] = await TagLib.getDateRangeFromLatestAndSecondLatestTagByProjectId(Env.GITLAB_PROJECT_ID);
+        const [latestTag, secondLatestTag] = await TagLib.getLatestAndSecondLatestTagByProjectId(Env.GITLAB_PROJECT_ID);
+        if (!_.get(latestTag, "commit.committed_date") || !_.get(secondLatestTag, "commit.committed_date")) {
+            Logger.error(`Abort the program`);
+            return;
+        }
+        const startDate = _.get(secondLatestTag, "commit.committed_date");
+        const endDate = _.get(latestTag, "commit.committed_date");
         Logger.info(`Time range that we are looking at MRs and issues is between ${Moment.tz(startDate, Env.TZ)} and ${Moment.tz(endDate, Env.TZ)}`);
         const mergeRequests = await MergeRequestLib.getMergeRequestByProjectIdStateStartDateAndEndDate(Env.GITLAB_PROJECT_ID, "merged", startDate, endDate);
         Logger.info(`Found ${mergeRequests ? mergeRequests.length : 0} merge requests`);
         const issues = await IssueLib.searchIssuesByProjectIdStateStartDateAndEndDate(Env.GITLAB_PROJECT_ID, "closed", startDate, endDate);
         Logger.info(`Found ${issues ? issues.length : 0} merge requests`);
-        const changeLog = ChangelogLib.createChangeLog({releaseDate: _.get(latestTag, "commit.committed_date", Moment.tz(Env.TZ)),issues, mergeRequests});
+        const changeLog = ChangelogLib.createChangeLog({releaseDate: endDate ,issues, mergeRequests});
         Logger.debug(`Changelog: ${changeLog}`);
         return await TagLib.upsertTagDescriptionByProjectIdAndTag(Env.GITLAB_PROJECT_ID, latestTag, changeLog);
-    } else {
-        Logger.warn(`No tags found in the project ${Env.GITLAB_PROJECT_ID}`);
-    }
 };
