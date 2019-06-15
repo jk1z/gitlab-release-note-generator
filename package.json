@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/jk1z/GitLab-Release-Note-Generator.git"
   },
-  "author": "",
+  "author": "Jack Zhang",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jk1z/GitLab-Release-Note-Generator/issues"
