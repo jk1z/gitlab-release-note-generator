@@ -42,7 +42,7 @@ describe("Generator lib", () => {
         .get(`/projects/${Env.GITLAB_PROJECT_ID}`)
         .reply(200,
           {
-            "id": 3,
+            "id": 12345678,
             "description": null,
             "default_branch": "master",
             "visibility": "private",
