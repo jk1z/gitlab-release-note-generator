@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.2
 jobs:
   test:
     docker:
@@ -17,7 +19,7 @@ jobs:
       - run:
           name: test
           command: npm run test-with-coverage
-      - store_artifacts:
+      - codecov/upload:
           path: coverage
 workflows:
   version: 2
