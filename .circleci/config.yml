@@ -4,6 +4,7 @@ jobs:
     docker:
       - image: circleci/node:10.16.0
     steps:
+      - checkout
       - restore_cache:
             key: dependency-cache-{{ checksum "package.json" }}
       - run:
