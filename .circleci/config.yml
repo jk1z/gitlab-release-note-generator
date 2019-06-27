@@ -1,0 +1,28 @@
+version: 2.1
+orbs:
+  codecov: codecov/codecov@1.0.2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:10.16.0
+    steps:
+      - checkout
+      - restore_cache:
+            key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: "Install node dependencies"
+          command: "npm install"
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: test
+          command: npm run test-with-coverage
+      - codecov/upload:
+          file: coverage/*.json
+workflows:
+  version: 2.1
+  workflow:
+    jobs:
+      - test
