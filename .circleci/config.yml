@@ -18,3 +18,8 @@ jobs:
           command: npm run test-with-coverage
       - store_artifacts:
           path: coverage
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - test
