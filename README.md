@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/jk1z/gitlab-release-note-generator/tree/master.svg?style=svg)](https://circleci.com/gh/jk1z/gitlab-release-note-generator/tree/master)
+[![codecov](https://codecov.io/gh/jk1z/gitlab-release-note-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/jk1z/gitlab-release-note-generator)
+
 # Gitlab Release Note Generator
 A Gitlab release note generator that generates release note on latest tag
 
