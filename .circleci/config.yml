@@ -20,9 +20,9 @@ jobs:
           name: test
           command: npm run test-with-coverage
       - codecov/upload:
-          path: coverage
+          file: coverage/*.json
 workflows:
-  version: 2
+  version: 2.1
   workflow:
     jobs:
       - test
