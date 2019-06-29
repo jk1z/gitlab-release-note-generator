@@ -4,10 +4,12 @@ const MergeRequestLib = require("./mergeRequest");
 const Moment = require("moment-timezone");
 const Env = require("../env");
 
-const LABEL_CONFIG = [{ name: "breaking change", title: "Notable changes" }, {
-  name: "enhancement",
-  title: "Enhancements"
-}, { name: "feature", title: "New features" }, { name: "bug", title: "Fixed bugs" }];
+const LABEL_CONFIG = [
+  { name: "breaking change", title: "Notable changes" },
+  { name: "enhancement", title: "Enhancements" },
+  { name: "feature", title: "New features" },
+  { name: "bug", title: "Fixed bugs" }
+];
 
 exports.createChangeLog = ({ releaseDate, issues, mergeRequests }) => {
   // Separate by labels
