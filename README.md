@@ -1,7 +1,7 @@
 [![CircleCI](https://circleci.com/gh/jk1z/gitlab-release-note-generator/tree/master.svg?style=svg)](https://circleci.com/gh/jk1z/gitlab-release-note-generator/tree/master)
 [![codecov](https://codecov.io/gh/jk1z/gitlab-release-note-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/jk1z/gitlab-release-note-generator)
 
-# Gitlab Release Note Generator
+# Gitlab Release Note Generator V1.0.0
 A Gitlab release note generator that generates release note on latest tag
 
 ## Feature
@@ -48,6 +48,8 @@ docker container run -e GITLAB_PERSONAL_TOKEN=gitlabSampleToken -e GITLAB_PROJEC
    - `generate-release-note` job. Generates a release note on the tag after detecting tag push with this regex `/^[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$/`
    - `tag-after-deployment` job (optional). Tag the commit that contains a version bump with this regex `/^[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$/`. **I made this because sometimes people will forget about tag pushing after a version bump**
 3. Customise the gitlab ci script to your need
+
+Reference gitlab repo: [generator test](https://gitlab.com/jackzhang/generator-test)
 
 
 ## TODO:
