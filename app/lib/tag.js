@@ -24,8 +24,12 @@ exports.getLatestAndSecondLatestTagByProjectId = async (projectId) => { // TODO:
           for (const branch of branches) {
             if (_.some(latestTagBranches, latestTagBranch => _.isEqual(branch, latestTagBranch))) {
               secondLatestTag = tag;
-              Logger.info(`Found the second latest tag on page ${page + 1}. The second latest tag is ${secondLatestTag.name}`);
+              break;
             }
+          }
+          if(secondLatestTag){
+            Logger.info(`Found the second latest tag on page ${page + 1}. The second latest tag is ${secondLatestTag.name}`);
+            break;
           }
         }
         if (!secondLatestTag && _.isFunction(_link.next)) {

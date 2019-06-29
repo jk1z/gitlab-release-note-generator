@@ -24,7 +24,7 @@ A Gitlab release note generator that generates release note on latest tag
 ## How to run this app
 - Fill in the parameter in the env.js, or feed it in process.env through npm
 - `npm start`
-- After couple second, latest tag should have a release note
+- After couple seconds, latest tag should have a release note
 ![](https://dl3.pushbulletusercontent.com/HIav5xaHjcerMtkHT3myQLnl5C9g1UP3/Screen%20Shot%202019-06-01%20at%204.27.18%20pm.png)
 
 ## TODO:
