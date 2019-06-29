@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  gitlab-release-note-generator:
+    build: .
+    image: gitlab-release-note-generator
+    environment:
+      - GITLAB_PERSONAL_TOKEN=NGk9eiym2H9wRSWG5-Tx
+      - GITLAB_PROJECT_ID=12625772
