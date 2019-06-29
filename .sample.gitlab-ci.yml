@@ -1,0 +1,48 @@
+stages:
+  - deploy
+  - post_deploy
+
+tag-after-deployment:
+  only:
+    refs:
+      - master
+      - develop
+    variables:
+      - $CI_COMMIT_TITLE =~ /^[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$/
+  except:
+    refs:
+      - tags
+  stage: deploy
+  image: debian:stable
+  before_script:
+    - apt-get clean -qq
+    - apt-get update -qq --fix-missing
+    - apt-get install -qq --fix-missing jq git
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - export VERSION=$(cat package.json | jq '.version' | sed "s/\"//g")
+    - git config --global user.name "${GITLAB_USER_NAME}"
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
+    - git remote set-url origin "git@gitlab.com:jackzhang/generator-test.git"
+    - git remote -v
+  script:
+    - git tag -a ${VERSION} ${CI_COMMIT_SHA} -m ""
+    - git push origin --tags
+
+generate-release-note:
+  only:
+    refs:
+      - tags
+    variables:
+      - $CI_COMMIT_TITLE =~ /^[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$/
+  stage: post_deploy
+  image: docker:stable
+  services:
+    - docker:dind
+  script:
+    - docker container run -e GITLAB_PERSONAL_TOKEN=${GITLAB_ACCESS_TOKEN} -e GITLAB_PROJECT_ID=${CI_PROJECT_ID} 00freezy00/gitlab-release-note-generator
