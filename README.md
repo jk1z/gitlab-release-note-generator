@@ -46,7 +46,7 @@ docker container run -e GITLAB_PERSONAL_TOKEN=gitlabSampleToken -e GITLAB_PROJEC
    What's included in the sample gitlab CI script
    
    - `generate-release-note` job. Generates a release note on the tag after detecting tag push with this regex `/^[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$/`
-   - `tag-after-deployment` job (optional). Tag the commit that contains a version bump with this regex `/^[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$/`. **I made this because sometimes people will forget about tag pushing after a version bump**
+   - `tag-after-deployment` job (optional). Tag the commit that contains a version bump with this regex `/^[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$/`. **Require ssh key to work.**
 3. Customise the gitlab ci script to your need
 
 Reference gitlab repo: [generator test](https://gitlab.com/jackzhang/generator-test)

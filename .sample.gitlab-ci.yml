@@ -31,7 +31,7 @@ tag-after-deployment:
     - git remote set-url origin "git@gitlab.com:jackzhang/generator-test.git"
     - git remote -v
   script:
-    - git tag -a ${VERSION} ${CI_COMMIT_SHA} -m ""
+    - git tag -a "v${VERSION}" ${CI_COMMIT_SHA} -m "${VERSION}"
     - git push origin --tags
 
 generate-release-note:
