@@ -29,11 +29,11 @@ A Gitlab release note generator that generates release note on latest tag
 ### Docker method
 
 ```shell
-docker container run -e GITLAB_PERSONAL_TOKEN=gitlabSampleToken -e GITLAB_PROJECT_ID=12345678 00freezy00/gitlab-release-note-generator
+docker container run -e GITLAB_PERSONAL_TOKEN=gitlabSampleToken -e GITLAB_PROJECT_ID=12345678 -e TARGET_BRANCH=sampleTargetBranch 00freezy00/gitlab-release-note-generator
 ```
 
 ### Nodejs Method
-- Fill in the parameters mainly `GITLAB_PERSONAL_TOKEN` and `GITLAB_PROJECT_ID` in `app/env.js` or feed it in `process.env` through npm
+- Fill in the parameters mainly `GITLAB_PERSONAL_TOKEN`, `GITLAB_PROJECT_ID`, `TARGET_BRANCH`(optional. Use it only if you want to find tags in the same specific branch) in `app/env.js` or feed it in `process.env` through npm
 - `npm install`
 - `npm start`
 - After couple seconds, latest tag should have a release note
