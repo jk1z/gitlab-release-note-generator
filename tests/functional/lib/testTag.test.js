@@ -44,6 +44,7 @@ describe("Tag library", () => {
             beforeAll(async () => {
                 setupCommon();
                 Env.TARGET_BRANCH = "develop";
+                Env.TARGET_TAG_REGEX = "^v[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$";
                 result = await Tag.getLatestAndSecondLatestTagByProjectId(mockProject.id);
             });
             test("should return 2 tags", () => {
