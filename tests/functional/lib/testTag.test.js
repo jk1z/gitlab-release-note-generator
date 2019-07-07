@@ -1,6 +1,7 @@
 const _ = require("lodash");
 const Tag = require("../../../app/lib/tag");
 const Gitlab = require("../../../app/adapters/gitlab");
+const Env = require("../../../app/env");
 const { when } = require("jest-when");
 
 const TagsFixture = require("../../fixtures/tag");
@@ -28,6 +29,22 @@ describe("Tag library", () => {
         describe("Sunny scenario", () => {
             beforeAll(async () => {
                 setupCommon();
+                result = await Tag.getLatestAndSecondLatestTagByProjectId(mockProject.id);
+            });
+            test("should return 2 tags", () => {
+                expect(result).toHaveLength(2);
+            });
+            test("should return latest and second latest tag", () => {
+                expect(result[0]).toEqual(mockTags[0]);
+                expect(result[1]).toEqual(mockTags[2]);
+            });
+        });
+
+        describe("Other scenario", () => {
+            beforeAll(async () => {
+                setupCommon();
+                Env.TARGET_BRANCH = "develop";
+                Env.TARGET_TAG_REGEX = "^v[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$";
                 result = await Tag.getLatestAndSecondLatestTagByProjectId(mockProject.id);
             });
             test("should return 2 tags", () => {

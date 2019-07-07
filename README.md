@@ -15,8 +15,8 @@ A Gitlab release note generator that generates release note on latest tag
 
 ## How it works
 1. Find the latest tag
-2. Find the second latest tag that is on the same branch as the latest tag.
-3. Locate the date range between the latest and the second latest tag. If there is only a tag in the project, then the `from` date will be the project creation date and the `to` date will be that tag's creation date.
+2. Find the previous tag that is on the same branch as the latest tag.
+3. Locate the date range between the latest and the previous tag. If there is only a tag in the project, then the `from` date will be the project creation date and the `to` date will be that tag's creation date.
 4. Find all **Merged** merge requests and **Closed** issues within that time range
 5. Generate a release note/changelog based on the findings above.
 
@@ -29,11 +29,11 @@ A Gitlab release note generator that generates release note on latest tag
 ### Docker method
 
 ```shell
-docker container run -e GITLAB_PERSONAL_TOKEN=gitlabSampleToken -e GITLAB_PROJECT_ID=12345678 00freezy00/gitlab-release-note-generator
+docker container run -e GITLAB_PERSONAL_TOKEN=gitlabSampleToken -e GITLAB_PROJECT_ID=12345678 -e TARGET_BRANCH=sampleTargetBranch -e TARGET_TAG_REGEX=sampleRegex 00freezy00/gitlab-release-note-generator
 ```
 
 ### Nodejs Method
-- Fill in the parameters mainly `GITLAB_PERSONAL_TOKEN` and `GITLAB_PROJECT_ID` in `app/env.js` or feed it in `process.env` through npm
+- Fill in the parameters mainly `GITLAB_PERSONAL_TOKEN`, `GITLAB_PROJECT_ID`, `TARGET_BRANCH`(optional. Use it only if you want to find tags in the same specific branch) and `TARGET_TAG_REGEX` (optional. Can use it to distinguish master or develop branch version bump) in `app/env.js` or feed it in `process.env` through npm
 - `npm install`
 - `npm start`
 - After couple seconds, latest tag should have a release note

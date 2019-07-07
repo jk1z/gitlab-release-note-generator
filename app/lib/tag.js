@@ -2,6 +2,7 @@ const _ = require("lodash");
 const Gitlab = require("../adapters/gitlab");
 const Logger = require("../logger");
 const Commit = require("./commit");
+const Env = require("../env");
 
 exports.getLatestAndSecondLatestTagByProjectId = async (projectId) => { // TODO: Add regex option to test the tags?
   let { tags, _link } = await Gitlab.searchTagsByProjectId(projectId);
@@ -14,13 +15,27 @@ exports.getLatestAndSecondLatestTagByProjectId = async (projectId) => { // TODO:
       Logger.info("No more tag is found. Assuming project creation date is the start date");
       return [latestTag, { commit: { committed_date: project.created_at } }];
     } else {
-      const latestTagBranches = await Commit.findBranchRefsByProjectIdAndSha(projectId, latestTag.commit.id);
+      let latestTagBranches = await Commit.findBranchRefsByProjectIdAndSha(projectId, latestTag.commit.id);
       let secondLatestTag;
       let page = 0;
 
+      if (Env.TARGET_BRANCH){
+        if (!_.some(latestTagBranches, branch => branch.name === Env.TARGET_BRANCH)){
+          throw new Error(`Latest tag doesn't contain target branch. Target branch ${Env.TARGET_BRANCH}`);
+        }
+        latestTagBranches = [{type: "branch", name: Env.TARGET_BRANCH}];
+      }
+
+      if (Env.TARGET_TAG_REGEX){
+        if (!latestTag.name.match(Env.TARGET_TAG_REGEX)){
+          throw new Error(`Latest tag doesn't match with the regex. Target tag regex ${Env.TARGET_TAG_REGEX}`);
+        }
+      }
+
       while (!secondLatestTag) {
         for (const tag of tags) {
-          const branches = await Commit.findBranchRefsByProjectIdAndSha(projectId, tag.commit.id);
+          if (Env.TARGET_TAG_REGEX && !tag.name.match(Env.TARGET_TAG_REGEX)) continue;
+          let branches = await Commit.findBranchRefsByProjectIdAndSha(projectId, tag.commit.id);
           for (const branch of branches) {
             if (_.some(latestTagBranches, latestTagBranch => _.isEqual(branch, latestTagBranch))) {
               secondLatestTag = tag;
