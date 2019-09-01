@@ -45,10 +45,11 @@ exports.createChangeLog = ({ releaseDate, issues, mergeRequests }) => {
     }
   }
 
-  const labelConfigs = [...LABEL_CONFIG, { name: "issues", title: "Closed issues" }, {
-    name: "mergeRequests",
-    title: "Merged merge requests"
-  }];
+  const labelConfigs = [...LABEL_CONFIG,
+    { name: "issues", title: "Closed issues" }, {
+      name: "mergeRequests",
+      title: "Merged merge requests"
+    }];
   let changelogMarkDown = `### Release note (${Moment.tz(releaseDate, Env.TZ).format("YYYY-MM-DD")})\n`;
   for (const labelConfig of labelConfigs) {
     if (changelog[labelConfig.name]) {
