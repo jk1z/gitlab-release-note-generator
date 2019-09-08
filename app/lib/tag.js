@@ -4,7 +4,7 @@ const Logger = require("../logger");
 const Commit = require("./commit");
 const Env = require("../env");
 
-exports.getLatestAndSecondLatestTagByProjectId = async (projectId) => { // TODO: Add regex option to test the tags?
+exports.getLatestAndSecondLatestTagByProjectId = async (projectId) => {
   let { tags, _link } = await Gitlab.searchTagsByProjectId(projectId);
   // Only get the latest and second latest one from the same branch
   if (!_.isEmpty(tags)) {

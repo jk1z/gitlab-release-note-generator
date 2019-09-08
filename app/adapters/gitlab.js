@@ -14,10 +14,9 @@ exports._decorateLinks = (link, templateFunction, templateArgs, query) => {
     const linkObj = {};
     if (link) {
         link = LinkHeaderParse(link);
-        if (link.first) linkObj.first = () => templateFunction.apply(null, [...templateArgs, {...query, page: link.first.page, per_page: link.first.per_page}]);
-        if (link.last) linkObj.last = () => templateFunction.apply(null, [...templateArgs, {...query, page: link.last.page, per_page: link.last.per_page}]);
-        if (link.next) linkObj.next = () => templateFunction.apply(null, [...templateArgs, {...query, page: link.next.page, per_page: link.next.per_page}]);
-        if (link.prev) linkObj.prev = () => templateFunction.apply(null, [...templateArgs, {...query, page: link.prev.page, per_page: link.prev.per_page}]);
+        for (const key of Object.keys(link)){
+            linkObj[key] = () => templateFunction.apply(null, [...templateArgs, {...query, page: link[key].page, per_page: link[key].per_page}]);
+        }
     }
     return linkObj;
 };

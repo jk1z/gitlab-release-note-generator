@@ -1,10 +1,6 @@
 const Generator = require("./lib/generator");
 const Logger = require("./logger");
 
-(async () => {
-  try {
-    await Generator.generate();
-  } catch (err) {
-    Logger.error(err);
-  }
-})();
+Generator.generate().then().catch(err => {
+  Logger.error(err);
+});
