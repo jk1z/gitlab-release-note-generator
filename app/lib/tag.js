@@ -34,7 +34,7 @@ exports.getLatestAndSecondLatestTagByProjectId = async (projectId) => {
 
       while (!secondLatestTag) {
         for (const tag of tags) {
-          if (Env.TARGET_TAG_REGEX && !tag.name.match(Env.TARGET_TAG_REGEX)) continue;
+          if (Env.TARGET_TAG_REGEX && _.isNil(tag.name.match(Env.TARGET_TAG_REGEX))) continue;
           let branches = await Commit.findBranchRefsByProjectIdAndSha(projectId, tag.commit.id);
           for (const branch of branches) {
             if (_.some(latestTagBranches, latestTagBranch => _.isEqual(branch, latestTagBranch))) {
