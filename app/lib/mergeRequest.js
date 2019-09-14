@@ -15,7 +15,10 @@ exports.getMergeRequestByProjectIdStateStartDateAndEndDate = async (projectId, s
   return mergeRequests;
 };
 
-exports.format = (mergeRequest) => {
-  // Sample: Sample MR #1 (username)
+exports.slackFormatter = (mergeRequest) => {
+  return `${mergeRequest.title} <${mergeRequest.web_url}|#${mergeRequest.iid}> (<${_.get(mergeRequest, "author.web_url")}|${_.get(mergeRequest, "author.username")}>)`;
+};
+
+exports.gitLabFormatter = (mergeRequest) => {
   return `${mergeRequest.title} [#${mergeRequest.iid}](${mergeRequest.web_url}) ([${_.get(mergeRequest, "author.username")}](${_.get(mergeRequest, "author.web_url")}))`;
 };

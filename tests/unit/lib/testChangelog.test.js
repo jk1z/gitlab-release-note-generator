@@ -2,7 +2,7 @@ const TestChangelogTest = require("../../../app/lib/changelog");
 const MockDate = require("mockdate");
 
 describe("TestChangelogTest lib", () => {
-  describe("#createChangeLog", () => {
+  describe("#createGitLabChangeLog", () => {
     let releaseDate;
     let mergeRequests;
     let issues;
@@ -176,7 +176,7 @@ describe("TestChangelogTest lib", () => {
         setupCommon();
         issues[0].labels = ["breaking change", "enhancement"];
         mergeRequests[0].labels = ["bug", "feature"];
-        changelog = TestChangelogTest.createChangeLog({releaseDate, issues, mergeRequests});
+        changelog = TestChangelogTest.createGitLabChangeLog({releaseDate, issues, mergeRequests});
       });
       afterAll(() => {
         cleanUpCommon();
@@ -198,7 +198,7 @@ describe("TestChangelogTest lib", () => {
     describe("Without labels", () => {
       beforeAll(() => {
         setupCommon();
-        changelog = TestChangelogTest.createChangeLog({releaseDate, issues, mergeRequests});
+        changelog = TestChangelogTest.createGitLabChangeLog({releaseDate, issues, mergeRequests});
       });
       afterAll(() => {
         cleanUpCommon();

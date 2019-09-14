@@ -15,6 +15,10 @@ exports.searchIssuesByProjectIdStateStartDateAndEndDate = async (projectId, stat
   return issues;
 };
 
-exports.format = (issue) => {
+exports.gitLabFormatter = (issue) => {
   return `${issue.title} [#${issue.iid}](${issue.web_url})`;
+};
+
+exports.slackFormatter = (issue) => {
+  return `${issue.title} <${issue.web_url}|#${issue.iid}>`
 };

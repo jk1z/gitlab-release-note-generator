@@ -20,7 +20,7 @@ exports.generate = async () => {
   Logger.info(`Found ${mergeRequests ? mergeRequests.length : 0} merge requests`);
   const issues = await IssueLib.searchIssuesByProjectIdStateStartDateAndEndDate(Env.GITLAB_PROJECT_ID, "closed", startDate, endDate);
   Logger.info(`Found ${issues ? issues.length : 0} issues`);
-  const changeLog = ChangelogLib.createChangeLog({ releaseDate: endDate, issues, mergeRequests });
+  const changeLog = ChangelogLib.createGitLabChangeLog({ releaseDate: endDate, issues, mergeRequests });
   Logger.debug(`Changelog: ${changeLog}`);
   return await TagLib.upsertTagDescriptionByProjectIdAndTag(Env.GITLAB_PROJECT_ID, latestTag, changeLog);
 };
