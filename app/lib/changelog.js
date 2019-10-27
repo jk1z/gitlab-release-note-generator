@@ -30,24 +30,26 @@ exports.generateChangeLogContent = async ({ releaseDate, issues, mergeRequests }
 
   const labelConfigs = [
     ...LABEL_CONFIG,
-    { name: "issues", title: "Closed issues" },
-    { name: "mergeRequests", title: "Merged merge requests" }
+    { name: "issues", title: "Closed issues", default: true },
+    { name: "mergeRequests", title: "Merged merge requests", default: true }
   ];
   if (options.useSlack) {
-    let changelogContent = `### Release note (${Moment.tz(releaseDate, Env.TZ).format("YYYY-MM-DD")})\n`;
-    for (const labelConfig of labelConfigs) {
-      if (changelogBucket[labelConfig.name]) {
-        changelogContent += `#### ${labelConfig.title}\n`;
-        changelogContent += changelogBucket[labelConfig.name].join("\n");
-      }
-    }
-    return changelogContent;
-  } else {
     let changelogContent = `*Release note (${Moment.tz(releaseDate, Env.TZ).format("YYYY-MM-DD")})*\n`;
     for (const labelConfig of labelConfigs) {
       if (changelogBucket[labelConfig.name]) {
         changelogContent += `*${labelConfig.title}*\n`;
         changelogContent += changelogBucket[labelConfig.name].join("\n");
+      }
+    }
+    return changelogContent;
+  } else {
+    let changelogContent = `### Release note (${Moment.tz(releaseDate, Env.TZ).format("YYYY-MM-DD")})\n`;
+    for (const labelConfig of labelConfigs) {
+      if (changelogBucket[labelConfig.name]) {
+          if (!_.isEmpty(changelogBucket[labelConfig.name]) || labelConfig.default) {
+            changelogContent += `#### ${labelConfig.title}\n`;
+            if (!_.isEmpty(changelogBucket[labelConfig.name])) changelogContent += changelogBucket[labelConfig.name].join("\n") + "\n";
+          }
       }
     }
     return changelogContent;
@@ -66,7 +68,7 @@ exports._populateIssuesWithBucketByIssue = (bucket, issues, options = {}) => {
   for (const issue of issues) {
     let added = false;
     for (const label of issue.labels) {
-      if (_.has(bucket, "label")) {
+      if (_.has(bucket, label)) {
         bucket[label].push(IssueLib.decorateIssue(issue, options));
         added = true;
       }
@@ -80,7 +82,7 @@ exports._populateMergeRequestsWithBucketByMergeRequests = (bucket, mergeRequests
   for (const mergeRequest of mergeRequests) {
     let added = false;
     for (const label of mergeRequest.labels) {
-      if (_.has(bucket, "label")) {
+      if (_.has(bucket, label)) {
         bucket[label].push(MergeRequestLib.decorateMergeRequest(mergeRequest, options));
         added = true;
       }

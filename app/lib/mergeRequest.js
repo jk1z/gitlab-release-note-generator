@@ -20,9 +20,9 @@ exports.decorateMergeRequest = (mergeRequest, options = {}) => {
 };
 
 exports.slackDecorator = (mergeRequest) => {
-  return `${mergeRequest.title} <${mergeRequest.web_url}|#${mergeRequest.iid}> (<${_.get(mergeRequest, "author.web_url")}|${_.get(mergeRequest, "author.username")}>)`;
+  return `- ${mergeRequest.title} <${mergeRequest.web_url}|#${mergeRequest.iid}> (<${_.get(mergeRequest, "author.web_url")}|${_.get(mergeRequest, "author.username")}>)`;
 };
 
 exports.gitLabDecorator = (mergeRequest) => {
-  return `${mergeRequest.title} [#${mergeRequest.iid}](${mergeRequest.web_url}) ([${_.get(mergeRequest, "author.username")}](${_.get(mergeRequest, "author.web_url")}))`;
+  return `- ${mergeRequest.title} [#${mergeRequest.iid}](${mergeRequest.web_url}) ([${_.get(mergeRequest, "author.username")}](${_.get(mergeRequest, "author.web_url")}))`;
 };
