@@ -45,8 +45,8 @@ exports.getLatestAndSecondLatestTagByProjectId = async (projectId) => {
               break;
             }
           }
-
         }
+        if (secondLatestTag) break;
       }
 
       if (!secondLatestTag) {

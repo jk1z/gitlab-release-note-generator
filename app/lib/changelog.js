@@ -67,7 +67,7 @@ exports._createLabelBucket = () => {
 exports._populateIssuesWithBucketByIssue = (bucket, issues, options = {}) => {
   for (const issue of issues) {
     let added = false;
-    for (const label of issue.labels) {
+    for (const label of issue.labels || []) {
       if (_.has(bucket, label)) {
         bucket[label].push(IssueLib.decorateIssue(issue, options));
         added = true;
@@ -81,7 +81,7 @@ exports._populateIssuesWithBucketByIssue = (bucket, issues, options = {}) => {
 exports._populateMergeRequestsWithBucketByMergeRequests = (bucket, mergeRequests, options = {}) => {
   for (const mergeRequest of mergeRequests) {
     let added = false;
-    for (const label of mergeRequest.labels) {
+    for (const label of mergeRequest.labels || []) {
       if (_.has(bucket, label)) {
         bucket[label].push(MergeRequestLib.decorateMergeRequest(mergeRequest, options));
         added = true;

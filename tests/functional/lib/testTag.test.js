@@ -36,7 +36,7 @@ describe("Tag library", () => {
             });
             test("should return latest and second latest tag", () => {
                 expect(result[0]).toEqual(mockTags[0]);
-                expect(result[1]).toEqual(mockTags[2]);
+                expect(result[1]).toEqual(mockTags[1]);
             });
         });
 
@@ -52,7 +52,7 @@ describe("Tag library", () => {
             });
             test("should return latest and second latest tag", () => {
                 expect(result[0]).toEqual(mockTags[0]);
-                expect(result[1]).toEqual(mockTags[2]);
+                expect(result[1]).toEqual(mockTags[1]);
             });
         });
     });
