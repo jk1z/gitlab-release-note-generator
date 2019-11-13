@@ -1,6 +1,6 @@
 {
   "name": "gitlab-release-note-generator",
-  "version": "1.2.5-0",
+  "version": "1.2.5",
   "description": "",
   "main": "index.js",
   "scripts": {
