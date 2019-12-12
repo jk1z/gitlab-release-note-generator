@@ -15,7 +15,15 @@ exports.generate = async () => {
   if (!_.get(latestTag, "commit.committed_date") || !_.get(secondLatestTag, "commit.committed_date")) throw new Error(`Cannot find latest and second latest tag. Abort the program!`);
   const startDate = _.get(secondLatestTag, "commit.committed_date");
   const endDate = _.get(latestTag, "commit.committed_date");
-  const changeLog = await ChangelogLib.getChangelogByStartAndEndDate(startDate, endDate);
+
+  // allow the end date to be adjusted by a few seconds to catch issues that are automatially closed by
+  // a MR and are time stamped a few seconds later.
+  Logger.debug(`EndDate:      ${endDate}`);
+  const parsedDate = new Date(Date.parse(endDate))
+  const newEndDate = new Date(parsedDate.getTime() + (1000 * Env.ISSUE_CLOSED_SECONDS)).toISOString()
+  Logger.debug(`New End Date: ${newEndDate}`);
+
+  const changeLog = await ChangelogLib.getChangelogByStartAndEndDate(startDate, newEndDate);
   const changeLogContent = await ChangelogLib.generateChangeLogContent(changeLog, {useSlack: false});
   Logger.debug(`Changelog: ${changeLogContent}`);
   return await TagLib.upsertTagDescriptionByProjectIdAndTag(Env.GITLAB_PROJECT_ID, latestTag, changeLogContent);

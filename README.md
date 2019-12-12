@@ -54,6 +54,21 @@ docker container run -e GITLAB_PERSONAL_TOKEN=gitlabSampleToken -e GITLAB_PROJEC
 Reference gitlab repo: [generator test](https://gitlab.com/jackzhang/generator-test)
 
 
+## Options
+
+These can be specified using environment variables
+
+* GITLAB_API_ENDPOINT: Your gitlab instaqnce's endpoint 
+  * Default https://gitlab.com/api/v4
+* GITLAB_PERSONAL_TOKEN: Grant api read/access permission
+* GITLAB_PROJECT_ID: Your project id that is located under settings > general
+* TARGET_BRANCH: The branch to look for release tags (ie master)
+* TARGET_TAG_REGEX:  Regular expression of the release tags to search (ie: ^release-.*$)
+* TZ: The timezone for your release notes 
+  * Default "Australia/Melbourne"
+* CLOSED_ISSUE_SECONDS: The amount of seconds to search after the last commit,  useful for Merge Requests that close their tickets a secon after the commit.
+  * Default 0
+
 ## TODO:
 ### Feature
 - Release notes generation on selected tag
