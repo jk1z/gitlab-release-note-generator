@@ -66,7 +66,7 @@ These can be specified using environment variables
 * TARGET_TAG_REGEX:  Regular expression of the release tags to search (ie: ^release-.*$)
 * TZ: The timezone for your release notes 
   * Default "Australia/Melbourne"
-* CLOSED_ISSUE_SECONDS: The amount of seconds to search after the last commit,  useful for Merge Requests that close their tickets a secon after the commit.
+* CLOSED_ISSUE_SECONDS: The amount of seconds to search after the last commit,  useful for Merge Requests that close their tickets a second after the commit.
   * Default 0
 
 ## TODO:
