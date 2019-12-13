@@ -18,10 +18,10 @@ exports.generate = async () => {
 
   // allow the end date to be adjusted by a few seconds to catch issues that are automatially closed by
   // a MR and are time stamped a few seconds later.
-  Logger.debug(`EndDate:      ${endDate}`);
-  const parsedDate = new Date(Date.parse(endDate))
-  const newEndDate = new Date(parsedDate.getTime() + (1000 * Env.ISSUE_CLOSED_SECONDS)).toISOString()
-  Logger.debug(`New End Date: ${newEndDate}`);
+  Logger.debug(`EndDate:        ${endDate}`);
+  Logger.debug(`Adding Seconds: ${Env.ISSUE_CLOSED_SECONDS}`);
+  const newEndDate = new Moment(endDate).add(Env.ISSUE_CLOSED_SECONDS, 'seconds').utc().format();
+  Logger.debug(`New End Date:   ${newEndDate}`);
 
   const changeLog = await ChangelogLib.getChangelogByStartAndEndDate(startDate, newEndDate);
   const changeLogContent = await ChangelogLib.generateChangeLogContent(changeLog, {useSlack: false});
