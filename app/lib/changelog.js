@@ -38,7 +38,9 @@ exports.generateChangeLogContent = async ({ releaseDate, issues, mergeRequests }
   const changelogUrl = `${project.web_url}/compare/${options.tags[1].name}...${options.tags[0].name}`;
   if (options.useSlack) {
     let changelogContent = `*Release note (${Moment.tz(releaseDate, Env.TZ).format("YYYY-MM-DD")})*\n`;
-    changelogContent += `<${changelogUrl}|Full Changelog>\n`;
+    if(options.fullChangelogLink) {
+      changelogContent += `<${changelogUrl}|Full Changelog>\n`;
+    }
     for (const labelConfig of labelConfigs) {
       if (changelogBucket[labelConfig.name]) {
         changelogContent += `*${labelConfig.title}*\n`;
@@ -48,7 +50,9 @@ exports.generateChangeLogContent = async ({ releaseDate, issues, mergeRequests }
     return changelogContent;
   } else {
     let changelogContent = `### Release note (${Moment.tz(releaseDate, Env.TZ).format("YYYY-MM-DD")})\n`;
-    changelogContent += `[Full Changelog](${changelogUrl})\n`;
+    if (options.fullChangelogLink) {
+      changelogContent += `[Full Changelog](${changelogUrl})\n`;
+    }
     for (const labelConfig of labelConfigs) {
       if (changelogBucket[labelConfig.name]) {
           if (!_.isEmpty(changelogBucket[labelConfig.name]) || labelConfig.default) {
