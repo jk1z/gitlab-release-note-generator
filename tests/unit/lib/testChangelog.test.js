@@ -184,6 +184,7 @@ describe("ChangelogLib lib", () => {
       });
       test("should render changelog in markdown", () => {
         expect(changelog).toEqual("### Release note (2019-06-02)\n" +
+          "[Full Changelog](http://gitlab.example.com/my-group/my-project/compare/0.1.0...0.1.1)" +
           "#### Notable changes\n" +
           "- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)\n" +
           "#### Enhancements\n" +
@@ -207,6 +208,7 @@ describe("ChangelogLib lib", () => {
       });
       test("should render changelog in markdown", () => {
         expect(changelog).toEqual("### Release note (2019-06-02)\n" +
+          "[Full Changelog](http://gitlab.example.com/my-group/my-project/compare/0.1.0...0.1.1)" +
           "#### Closed issues\n" +
           "- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)\n" +
           "#### Merged merge requests\n" +
