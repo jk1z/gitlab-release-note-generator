@@ -46,7 +46,7 @@ exports.generateChangeLogContent = async ({ releaseDate, issues, mergeRequests }
     let changelogContent = `### Release note (${Moment.tz(releaseDate, Env.TZ).format("YYYY-MM-DD")})\n`;
     for (const labelConfig of labelConfigs) {
       if (changelogBucket[labelConfig.name]) {
-          if (!_.isEmpty(changelogBucket[labelConfig.name]) || labelConfig.default) {
+          if (!_.isEmpty(changelogBucket[labelConfig.name]) || (labelConfig.default && Env.RENDER_EMPTY_SECTIONS)) {
             changelogContent += `#### ${labelConfig.title}\n`;
             if (!_.isEmpty(changelogBucket[labelConfig.name])) changelogContent += changelogBucket[labelConfig.name].join("\n") + "\n";
           }

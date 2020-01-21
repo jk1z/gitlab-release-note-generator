@@ -68,6 +68,8 @@ These can be specified using environment variables
   * Default "Australia/Melbourne"
 * ISSUE_CLOSED_SECONDS: The amount of seconds to search after the last commit,  useful for Merge Requests that close their tickets a second after the commit.
   * Default 0
+* RENDER_EMPTY_SECTIONS: Option to render empty default sections. _Closed Issues_ and _Merged merge requests_ are default and renders all the time, even when they are empty. With this option set to `"false"` this tool will not generate them if they are empty.
+  * Default `"true"`
 
 ## Building and Running locally
 
