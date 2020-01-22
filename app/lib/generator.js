@@ -1,4 +1,5 @@
 const _ = require("lodash");
+const CompareLib = require("./compare");
 const IssueLib = require("./issue");
 const MergeRequestLib = require("./mergeRequest");
 const TagLib = require("./tag");
@@ -25,8 +26,9 @@ exports.generate = async () => {
     Logger.debug(`New End Date:   ${endDate}`);
   }
 
+  const compare = await CompareLib.getCompareForLatestAndSecondLatestTag(Env.GITLAB_PROJECT_ID, latestTag, secondLatestTag);
   const changeLog = await ChangelogLib.getChangelogByStartAndEndDate(startDate, endDate);
-  const changeLogContent = await ChangelogLib.generateChangeLogContent(changeLog, {useSlack: false});
+  const changeLogContent = await ChangelogLib.generateChangeLogContent({...changeLog, compare}, {useSlack: false});
   Logger.debug(`Changelog: ${changeLogContent}`);
   return await TagLib.upsertTagDescriptionByProjectIdAndTag(Env.GITLAB_PROJECT_ID, latestTag, changeLogContent);
 };

@@ -20,7 +20,7 @@ const LABEL_CONFIG = [
   { name: "bug", title: "Fixed bugs" }
 ];
 
-exports.generateChangeLogContent = async ({ releaseDate, issues, mergeRequests }, options = {}) => {
+exports.generateChangeLogContent = async ({ releaseDate, issues, mergeRequests, compare }, options = {}) => {
   // Separate by labels
   let changelogBucket = exports._createLabelBucket();
 
@@ -51,6 +51,9 @@ exports.generateChangeLogContent = async ({ releaseDate, issues, mergeRequests }
             if (!_.isEmpty(changelogBucket[labelConfig.name])) changelogContent += changelogBucket[labelConfig.name].join("\n") + "\n";
           }
       }
+    }
+    if (!_.isEmpty(compare)) {
+      changelogContent += `\n[${compare.text}](${compare.url})\n`;
     }
     return changelogContent;
   }
