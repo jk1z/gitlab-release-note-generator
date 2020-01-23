@@ -26,7 +26,7 @@ exports.generate = async () => {
   }
 
   const changeLog = await ChangelogLib.getChangelogByStartAndEndDate(startDate, endDate);
-  const changeLogContent = await ChangelogLib.generateChangeLogContent(changeLog, {useSlack: false});
+  const changeLogContent = await ChangelogLib.generateChangeLogContent(changeLog, {tags, fullChangelogLink: true, useSlack: false});
   Logger.debug(`Changelog: ${changeLogContent}`);
   return await TagLib.upsertTagDescriptionByProjectIdAndTag(Env.GITLAB_PROJECT_ID, latestTag, changeLogContent);
 };

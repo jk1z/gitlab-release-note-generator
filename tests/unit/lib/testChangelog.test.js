@@ -176,13 +176,15 @@ describe("ChangelogLib lib", () => {
         setupCommon();
         issues[0].labels = ["breaking change", "enhancement"];
         mergeRequests[0].labels = ["bug", "feature"];
-        changelog = await ChangelogLib.generateChangeLogContent({releaseDate, issues, mergeRequests});
+        tags = ["0.1.1", "0.1.0"];
+        changelog = await ChangelogLib.generateChangeLogContent({releaseDate, issues, mergeRequests}, {tags, fullChangelogLink: true});
       });
       afterAll(() => {
         cleanUpCommon();
       });
       test("should render changelog in markdown", () => {
         expect(changelog).toEqual("### Release note (2019-06-02)\n" +
+          "[Full Changelog](http://gitlab.example.com/my-group/my-project/compare/0.1.0...0.1.1)\n" +
           "#### Notable changes\n" +
           "- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)\n" +
           "#### Enhancements\n" +
@@ -198,12 +200,56 @@ describe("ChangelogLib lib", () => {
     describe("Without labels", () => {
       beforeAll(async () => {
         setupCommon();
-        changelog = await ChangelogLib.generateChangeLogContent({releaseDate, issues, mergeRequests});
+        tags = ["0.1.1", "0.1.0"];
+        changelog = await ChangelogLib.generateChangeLogContent({releaseDate, issues, mergeRequests}, {tags, fullChangelogLink: true});
       });
       afterAll(() => {
         cleanUpCommon();
       });
       test("should render changelog in markdown", () => {
+        expect(changelog).toEqual("### Release note (2019-06-02)\n" +
+          "[Full Changelog](http://gitlab.example.com/my-group/my-project/compare/0.1.0...0.1.1)\n" +
+          "#### Closed issues\n" +
+          "- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)\n" +
+          "#### Merged merge requests\n" +
+          "- test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))\n");
+      });
+    });
+    describe("With labels and without full changelog link", () => {
+      beforeAll(async () => {
+        setupCommon();
+        issues[0].labels = ["breaking change", "enhancement"];
+        mergeRequests[0].labels = ["bug", "feature"];
+        tags = ["0.1.1", "0.1.0"];
+        changelog = await ChangelogLib.generateChangeLogContent({releaseDate, issues, mergeRequests}, {tags);
+      });
+      afterAll(() => {
+        cleanUpCommon();
+      });
+      test("should render changelog in markdown without full changelog link", () => {
+        expect(changelog).toEqual("### Release note (2019-06-02)\n" +
+          "#### Notable changes\n" +
+          "- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)\n" +
+          "#### Enhancements\n" +
+          "- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)\n" +
+          "#### New features\n" +
+          "- test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))\n" +
+          "#### Fixed bugs\n" +
+          "- test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))\n" +
+          "#### Closed issues\n" +
+          "#### Merged merge requests\n")
+      });
+    });
+    describe("Without labels and without full changelog link", () => {
+      beforeAll(async () => {
+        setupCommon();
+        tags = ["0.1.1", "0.1.0"];
+        changelog = await ChangelogLib.generateChangeLogContent({releaseDate, issues, mergeRequests}, {tags});
+      });
+      afterAll(() => {
+        cleanUpCommon();
+      });
+      test("should render changelog in markdown without full changelog link", () => {
         expect(changelog).toEqual("### Release note (2019-06-02)\n" +
           "#### Closed issues\n" +
           "- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)\n" +
