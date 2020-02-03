@@ -168,6 +168,12 @@ describe("ChangelogLib lib", () => {
         "subscribed": false
       }];
     };
+    const setupCommonEmpty = () => {
+      MockDate.set(new Date("2019-06-02T06:26:31.000Z"));
+      releaseDate = new Date().toISOString();
+      mergeRequests = [];
+      issues = [];
+    };
     const cleanUpCommon = () => {
       MockDate.reset();
     };
@@ -209,6 +215,18 @@ describe("ChangelogLib lib", () => {
           "- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)\n" +
           "#### Merged merge requests\n" +
           "- test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))\n");
+      });
+    });
+    describe("Without empty sections", () => {
+      beforeAll(async () => {
+        setupCommonEmpty();
+        changelog = await ChangelogLib.generateChangeLogContent({releaseDate, issues, mergeRequests}, {renderEmptySections: false});
+      });
+      afterAll(() => {
+        cleanUpCommon();
+      });
+      test("should render changelog in markdown", () => {
+        expect(changelog).toEqual("### Release note (2019-06-02)\n");
       });
     });
   });

@@ -24,6 +24,8 @@ exports.generateChangeLogContent = async ({ releaseDate, issues, mergeRequests }
   // Separate by labels
   let changelogBucket = exports._createLabelBucket();
 
+  const renderEmptySections = options.renderEmptySections != null ? options.renderEmptySections : true;
+
   exports._populateIssuesWithBucketByIssue(changelogBucket, issues, options);
 
   exports._populateMergeRequestsWithBucketByMergeRequests(changelogBucket, mergeRequests, options);
@@ -46,7 +48,7 @@ exports.generateChangeLogContent = async ({ releaseDate, issues, mergeRequests }
     let changelogContent = `### Release note (${Moment.tz(releaseDate, Env.TZ).format("YYYY-MM-DD")})\n`;
     for (const labelConfig of labelConfigs) {
       if (changelogBucket[labelConfig.name]) {
-          if (!_.isEmpty(changelogBucket[labelConfig.name]) || labelConfig.default) {
+          if (!_.isEmpty(changelogBucket[labelConfig.name]) || (labelConfig.default && renderEmptySections)) {
             changelogContent += `#### ${labelConfig.title}\n`;
             if (!_.isEmpty(changelogBucket[labelConfig.name])) changelogContent += changelogBucket[labelConfig.name].join("\n") + "\n";
           }
