@@ -73,3 +73,7 @@ exports.updateTagReleaseByProjectIdTagNameAndTagId = async (projectId, tagName, 
     return Request({uri: `${Env.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/tags/${tagName}/release`, method: "PUT", body, ...options});
 };
 
+exports.getProjectByProjectID = async (projectId) => {
+  return Request({uri: `${Env.GITLAB_API_ENDPOINT}/projects/${projectId}`, ...options});
+};
+
