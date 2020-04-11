@@ -12,8 +12,9 @@ A Gitlab release note generator that generates release note on latest tag
    
    *(Note. if an issue or merge request that has 2 or more labels, that issue or merge request will be displayed again under the corresponding title)*
    
--  Can be integrated as a CD service. Tutorial below
 
+-  Ability to send the generated release notes to Slack
+-  Can be integrated as a CD service. Tutorial below
 
 ## How it works
 1. Find the latest tag
@@ -35,7 +36,7 @@ docker container run -e GITLAB_PERSONAL_TOKEN=gitlabSampleToken -e GITLAB_PROJEC
 ```
 
 ### Nodejs Method
-- Fill in the parameters mainly `GITLAB_PERSONAL_TOKEN`, `GITLAB_PROJECT_ID`, `TARGET_BRANCH`(optional. Use it only if you want to find tags in the same specific branch) and `TARGET_TAG_REGEX` (optional. Can use it to distinguish master or develop branch version bump) in `app/env.js` or feed it in `process.env` through npm
+- Fill in the parameters mainly `GITLAB_PERSONAL_TOKEN`, `GITLAB_PROJECT_ID`, `TARGET_BRANCH`(optional. Use it only if you want to find tags in the same specific branch), `TARGET_TAG_REGEX` (optional. Can use it to distinguish master or develop branch version bump), `PUBLISH_TO_SLACK` (optional) and `SLACK_WEBHOOK_URL` (optional) in `app/env.js` or feed it in `process.env` through npm
 - `npm install`
 - `npm start`
 - After couple seconds, latest tag should have a release note
@@ -43,13 +44,14 @@ docker container run -e GITLAB_PERSONAL_TOKEN=gitlabSampleToken -e GITLAB_PROJEC
 
 ### Gitlab CI method
 1. Need to pass in `gitlab personal access token` as a CI variable
-2. c/p the `.sample.gitlab-ci.yml` to your gitlab ci.
-   
+2. Need to pass in `SLACK_WEBHOOK_URL` as a CI variable (optional)
+3. c/p the `.sample.gitlab-ci.yml` to your gitlab ci.
+
    What's included in the sample gitlab CI script
-   
+
    - `generate-release-note` job. Generates a release note on the tag after detecting tag push with this regex `/^[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$/`
    - `tag-after-deployment` job (optional). Tag the commit that contains a version bump with this regex `/^[0-9]+.[0-9]+.[0-9]+(-[0-9]+)?$/`. **Require ssh key to work.**
-3. Customise the gitlab ci script to your need
+4. Customise the gitlab ci script to your need
 
 Reference gitlab repo: [generator test](https://gitlab.com/jackzhang/generator-test)
 
@@ -58,7 +60,7 @@ Reference gitlab repo: [generator test](https://gitlab.com/jackzhang/generator-t
 
 These can be specified using environment variables
 
-* GITLAB_API_ENDPOINT: Your gitlab instaqnce's endpoint 
+* GITLAB_API_ENDPOINT: Your gitlab instance's endpoint
   * Default https://gitlab.com/api/v4
 * GITLAB_PERSONAL_TOKEN: Grant api read/access permission
 * GITLAB_PROJECT_ID: Your project id that is located under settings > general
@@ -68,6 +70,8 @@ These can be specified using environment variables
   * Default "Australia/Melbourne"
 * ISSUE_CLOSED_SECONDS: The amount of seconds to search after the last commit,  useful for Merge Requests that close their tickets a second after the commit.
   * Default 0
+* PUBLISH_TO_SLACK: Feature flag to turn on or off publishing release notes to Slack.  (optional).
+* SLACK_WEBHOOK_URL: Your Slack webhook URL to send the generated release notes to Slack (optional).
 
 ## Building and Running locally
 
@@ -87,6 +91,8 @@ docker container run \
   -e GITLAB_PROJECT_ID=$GITLAB_PROJECT_ID \
   -e TARGET_BRANCH=master \
   -e TARGET_TAG_REGEX=^release-.*$ \
+  -e PUBLISH_TO_SLACK=true \
+  -e SLACK_WEBHOOK_URL=$SLACK_WEBHOOK_URL \
   local-gitlab-release-note-generator
 
 ```
