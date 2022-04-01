@@ -1,18 +1,30 @@
 {
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es6": true
-    },
-    "extends": "eslint:recommended",
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
+    "extends": ["eslint:recommended", "plugin:node/recommended"],
+    "plugins": ["prettier"],
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2021
     },
     "rules": {
-        "no-console": "off"
+        "no-fallthrough": "warn",
+        "no-process-exit": "off",
+        "no-console": "warn",
+        "no-unused-vars": "warn",
+        "node/no-unpublished-require": "off",
+        "no-useless-escape": "warn",
+        "no-empty": "off",
+        "no-unused-labels": "off",
+        "no-undef": "error",
+        "prettier/prettier": [
+            "error",
+            {
+                "arrowParens": "always",
+                "bracketSpacing": true,
+                "printWidth": 120,
+                "semi": true,
+                "singleQuote": false,
+                "tabWidth": 4,
+                "trailingComma": "none"
+            }
+        ]
     }
 }
