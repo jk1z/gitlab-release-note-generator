@@ -3,9 +3,9 @@ const QueryString = require("querystring");
 const LinkHeaderParse = require("parse-link-header");
 
 module.exports = class GitlabAdapter {
-    constructor({ CONFIG }) {
-        this.GITLAB_PERSONAL_TOKEN = CONFIG.GITLAB_PERSONAL_TOKEN;
-        this.GITLAB_API_ENDPOINT = CONFIG.GITLAB_API_ENDPOINT;
+    constructor({ config }) {
+        this.GITLAB_PERSONAL_TOKEN = config.GITLAB_PERSONAL_TOKEN;
+        this.GITLAB_API_ENDPOINT = config.GITLAB_API_ENDPOINT;
         this.gotDefaultOptions = {
             headers: { "Private-Token": this.GITLAB_PERSONAL_TOKEN }
         };

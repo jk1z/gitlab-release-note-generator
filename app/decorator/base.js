@@ -1,5 +1,4 @@
 const _ = require("lodash");
-const IssueLib = require("../lib/issue");
 
 module.exports = class BaseDecorator {
     constructor({ changelog, labelConfigs, tz }) {

@@ -1,4 +1,4 @@
-FROM node:12.14.1
+FROM node:16.14.2
 
 MAINTAINER Jack Zhang
 
