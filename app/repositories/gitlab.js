@@ -37,4 +37,14 @@ module.exports = class GitlabRepository {
     async findBranchRefsByProjectIdAndSha(projectId, sha) {
         return this.gitlabAdapter.findCommitRefsByProjectIdAndSha(projectId, sha, { type: "branch" });
     }
+
+    // Tags
+    async findTagsByProjectId(projectId) {
+        return this.gitlabAdapter.searchTagsByProjectId(projectId);
+    }
+
+    // Repo
+    async findRepoByProjectId(projectId) {
+        return this.gitlabAdapter.getRepoByProjectId(projectId);
+    }
 };
