@@ -1,6 +1,6 @@
 const _ = require("lodash");
 const Tag = require("../../../app/lib/tag");
-const Gitlab = require("../../../app/adapters/gitlab");
+const Gitlab = require("../../../app/adapter/gitlab");
 const Env = require("../../../app/env");
 const { when } = require("jest-when");
 

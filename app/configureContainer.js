@@ -1,6 +1,6 @@
 const Awilix = require("awilix");
 
-const GitlabAdapter = require("./adapters/gitlab");
+const GitlabAdapter = require("./adapter/gitlab");
 const GitlabRepository = require("./repositories/gitlab");
 
 const ChangelogService = require("./services/changelog");

@@ -1,4 +1,4 @@
-const Gitlab = require("../../../app/adapters/gitlab");
+const Gitlab = require("../../../app/adapter/gitlab");
 
 describe("Gitlab adapter", () => {
     describe("#_decorateLinks", () => {

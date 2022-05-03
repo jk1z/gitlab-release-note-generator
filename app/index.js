@@ -58,7 +58,7 @@ const container = ConfigureContainer();
         };
         container.register({ config: asValue(config) });
         const GitLabReleaseNoteGenerator = container.resolve("gitLabReleaseNoteGenerator");
-        GitLabReleaseNoteGenerator.run();
+        await GitLabReleaseNoteGenerator.run();
     } catch (err) {
         console.error(`Fatal error: ${JSON.stringify(err, Object.getOwnPropertyNames(err))}`);
     }
