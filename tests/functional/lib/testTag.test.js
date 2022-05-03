@@ -7,8 +7,6 @@ const { when } = require("jest-when");
 const TagsFixture = require("../../fixtures/tag");
 const ProjectFixture = require("../../fixtures/project");
 
-
-
 describe("Tag library", () => {
     let mockProject;
     let mockTags;
@@ -18,13 +16,21 @@ describe("Tag library", () => {
             mockProject = ProjectFixture.projectDefault;
             mockTags = TagsFixture.tags;
             Gitlab.searchTagsByProjectId = jest.fn();
-            Gitlab.searchTagsByProjectId.mockResolvedValue({tags: _.cloneDeep(mockTags)});
+            Gitlab.searchTagsByProjectId.mockResolvedValue({ tags: _.cloneDeep(mockTags) });
             Gitlab.findCommitRefsByProjectIdAndSha = jest.fn();
             when(Gitlab.findCommitRefsByProjectIdAndSha)
-              .calledWith(mockProject.id, mockTags[0].commit.id, {type: "branch"}).mockResolvedValue([{"type": "branch", "name": "develop"}])
-              .calledWith(mockProject.id, mockTags[1].commit.id, {type: "branch"}).mockResolvedValue([{"type": "branch", "name": "master"}, {"type": "branch", "name": "mockBranchOther"}])
-              .calledWith(mockProject.id, mockTags[2].commit.id, {type: "branch"}).mockResolvedValue([{"type": "branch", "name": "develop"}, {"type": "branch", "name": "mockBranchOther"}])
-
+                .calledWith(mockProject.id, mockTags[0].commit.id, { type: "branch" })
+                .mockResolvedValue([{ type: "branch", name: "develop" }])
+                .calledWith(mockProject.id, mockTags[1].commit.id, { type: "branch" })
+                .mockResolvedValue([
+                    { type: "branch", name: "master" },
+                    { type: "branch", name: "mockBranchOther" }
+                ])
+                .calledWith(mockProject.id, mockTags[2].commit.id, { type: "branch" })
+                .mockResolvedValue([
+                    { type: "branch", name: "develop" },
+                    { type: "branch", name: "mockBranchOther" }
+                ]);
         };
         describe("Sunny scenario", () => {
             beforeAll(async () => {

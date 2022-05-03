@@ -1,10 +1,18 @@
 {
     "extends": ["eslint:recommended", "plugin:node/recommended"],
-    "plugins": ["prettier"],
+    "plugins": ["prettier", "jest"],
     "parserOptions": {
         "ecmaVersion": 2021
     },
+    "env": {
+        "jest/globals": true
+    },
     "rules": {
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error",
         "no-fallthrough": "warn",
         "no-process-exit": "off",
         "no-console": "warn",
