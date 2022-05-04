@@ -43,7 +43,10 @@ module.exports = class GitLabReleaseNoteGenerator {
             { name: "mergeRequests", title: "Merged merge requests", default: true }
         ];
         const DecoratorFactory = require("./decorator");
-        const decorator = new DecoratorFactory({ SERVICE_PROVIDER: this.config.SERVICE_PROVIDER }).create({
+        const decorator = new DecoratorFactory({
+            SERVICE_PROVIDER: this.config.SERVICE_PROVIDER,
+            loggerService: this.logger
+        }).create({
             changelog: { mergeRequests, issues, releaseDate },
             labelConfigs,
             tz: this.config.TZ
@@ -54,12 +57,13 @@ module.exports = class GitLabReleaseNoteGenerator {
         const PublisherFactory = require("./publisher");
         const publisher = new PublisherFactory({
             SERVICE_PROVIDER: this.config.SERVICE_PROVIDER,
-            gitlabAdapter: this.gitlabAdapter
-        }).create({
-            projectId: this.config.projectId,
-            latestTag,
+            gitlabAdapter: this.gitlabAdapter,
+            loggerService: this.logger
+        }).create();
+        await publisher.publish({
+            projectId: this.config.GITLAB_PROJECT_ID,
+            tag: latestTag,
             content
         });
-        await publisher.publish(content);
     }
 };

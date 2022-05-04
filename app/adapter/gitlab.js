@@ -7,7 +7,8 @@ module.exports = class GitlabAdapter {
         this.GITLAB_PERSONAL_TOKEN = config.GITLAB_PERSONAL_TOKEN;
         this.GITLAB_API_ENDPOINT = config.GITLAB_API_ENDPOINT;
         this.gotDefaultOptions = {
-            headers: { "Private-Token": this.GITLAB_PERSONAL_TOKEN }
+            headers: { "Private-Token": this.GITLAB_PERSONAL_TOKEN },
+            responseType: "json"
         };
     }
     _decorateLinks(link, templateFunction, templateArgs, query) {
@@ -26,9 +27,10 @@ module.exports = class GitlabAdapter {
     }
 
     async getRepoByProjectId(projectId) {
-        return Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}`, {
+        const response = await Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}`, {
             ...this.gotDefaultOptions
-        }).json();
+        });
+        return response.body;
     }
 
     async searchMergeRequestsByProjectId(projectId, query) {
@@ -36,7 +38,7 @@ module.exports = class GitlabAdapter {
         const response = await Got.get(
             `${this.GITLAB_API_ENDPOINT}/projects/${projectId}/merge_requests${queryString ? `?${queryString}` : ""}`,
             { ...this.gotDefaultOptions }
-        ).json();
+        );
         const linkObj = this._decorateLinks(
             response.headers.link,
             this.searchMergeRequestsByProjectId,
@@ -56,7 +58,7 @@ module.exports = class GitlabAdapter {
             {
                 ...this.gotDefaultOptions
             }
-        ).json();
+        );
         const linkObj = this._decorateLinks(response.headers.link, this.searchIssuesByProjectId, [projectId], query);
         return {
             issues: response.body,
@@ -71,7 +73,7 @@ module.exports = class GitlabAdapter {
             {
                 ...this.gotDefaultOptions
             }
-        ).json();
+        );
         const linkObj = this._decorateLinks(response.headers.link, this.searchTagsByProjectId, [projectId], query);
         return {
             tags: response.body,
@@ -82,48 +84,53 @@ module.exports = class GitlabAdapter {
     async getMergeRequestByProjectIdAndMergeRequestId(projectId, mergeRequestId) {
         return Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/merge_requests/${mergeRequestId}`, {
             ...this.gotDefaultOptions
-        }).json();
+        });
     }
 
     async getIssueByProjectIdAndIssueId(projectId, issueId) {
         return Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/issues/${issueId}`, {
             ...this.gotDefaultOptions
-        }).json();
+        });
     }
 
     async getTagByProjectIdAndTagId(projectId, tagName) {
-        return Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/tags/${tagName}`, {
+        const response = await Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/tags/${tagName}`, {
             ...this.gotDefaultOptions
-        }).json();
+        });
+        return response.body;
     }
 
     async getCommitByProjectIdAndSha(projectId, sha) {
-        return Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/commits/${sha}`, {
+        const response = await Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/commits/${sha}`, {
             ...this.gotDefaultOptions
-        }).json();
+        });
+        return response.body;
     }
 
     async findCommitRefsByProjectIdAndSha(projectId, sha, query) {
         const queryString = query ? QueryString.stringify(query) : null;
-        return Got.get(
+        const response = await Got.get(
             `${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/commits/${sha}/refs${
                 queryString ? `?${queryString}` : ""
             }`,
             { ...this.gotDefaultOptions }
         );
+        return response.body;
     }
 
     async createTagReleaseByProjectIdTagNameAndTagId(projectId, tagName, body) {
-        return Got.post(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/tags/${tagName}/release`, {
+        const response = await Got.post(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/releases`, {
             ...this.gotDefaultOptions,
-            json: body
-        }).json();
+            json: { ...body, tagName }
+        });
+        return response.body;
     }
 
     async updateTagReleaseByProjectIdTagNameAndTagId(projectId, tagName, body) {
-        return Got.put(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/tags/${tagName}/release`, {
+        const response = await Got.put(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/releases/${tagName}`, {
             ...this.gotDefaultOptions,
             json: body
-        }).json;
+        });
+        return response.body;
     }
 };

@@ -14,7 +14,7 @@ const container = ConfigureContainer();
                 "Usage: $0 -GITLAB_API_ENDPOINT [string] " +
                     "-GITLAB_PERSONAL_TOKEN [string] -GITLAB_PROJECT_ID [string] " +
                     "-TARGET_BRANCH [regex string] -TARGET_TAG_REGEX [regex string] " +
-                    "-SERVICE_PROVIDER [string]" +
+                    "-SERVICE_PROVIDER [string] " +
                     "-ISSUE_CLOSED_SECONDS [num] " +
                     "-TZ [string] -NODE_ENV [string]"
             )
