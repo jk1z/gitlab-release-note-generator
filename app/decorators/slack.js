@@ -1,6 +1,5 @@
 const Moment = require("moment-timezone");
 const _ = require("lodash");
-const Env = require("../env");
 const BaseDecorator = require("./base");
 
 module.exports = class SlackDecorator extends BaseDecorator {
@@ -20,7 +19,7 @@ module.exports = class SlackDecorator extends BaseDecorator {
             };
         });
         this.populateContentBucketByContents([...issues, ...mergeRequests]);
-        let output = `*Release note (${Moment.tz(this.changelog.releaseDate, Env.TZ).format("YYYY-MM-DD")})*\n`;
+        let output = `*Release note (${Moment.tz(this.changelog.releaseDate, this.tz).format("YYYY-MM-DD")})*\n`;
         for (const labelConfig of this.labelConfigs) {
             if (this.labelBucket[labelConfig.name]) {
                 output += `*${labelConfig.title}*\n`;

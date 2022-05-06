@@ -16,7 +16,7 @@ module.exports = class GitlabDecorator extends BaseDecorator {
             return {
                 message: this.decorateMergeRequest(mergeRequest),
                 labels: [...mergeRequest.labels],
-                defaultLabel: "mergeRequest"
+                defaultLabel: "mergeRequests"
             };
         });
         this.populateContentBucketByContents([...issues, ...mergeRequests]);

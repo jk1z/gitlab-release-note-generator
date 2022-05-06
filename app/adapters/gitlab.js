@@ -1,5 +1,4 @@
 const Got = require("got");
-const QueryString = require("querystring");
 const LinkHeaderParse = require("parse-link-header");
 
 module.exports = class GitlabAdapter {
@@ -34,7 +33,7 @@ module.exports = class GitlabAdapter {
     }
 
     async searchMergeRequestsByProjectId(projectId, query) {
-        const queryString = query ? QueryString.stringify(query) : null;
+        const queryString = query ? new URLSearchParams(query).toString() : null;
         const response = await Got.get(
             `${this.GITLAB_API_ENDPOINT}/projects/${projectId}/merge_requests${queryString ? `?${queryString}` : ""}`,
             { ...this.gotDefaultOptions }
@@ -52,7 +51,7 @@ module.exports = class GitlabAdapter {
     }
 
     async searchIssuesByProjectId(projectId, query) {
-        const queryString = query ? QueryString.stringify(query) : null;
+        const queryString = query ? new URLSearchParams(query).toString() : null;
         const response = await Got.get(
             `${this.GITLAB_API_ENDPOINT}/projects/${projectId}/issues${queryString ? `?${queryString}` : ""}`,
             {
@@ -67,7 +66,7 @@ module.exports = class GitlabAdapter {
     }
 
     async searchTagsByProjectId(projectId, query) {
-        const queryString = query ? QueryString.stringify(query) : null;
+        const queryString = query ? new URLSearchParams(query).toString() : null;
         const response = await Got.get(
             `${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/tags${queryString ? `?${queryString}` : ""}`,
             {
@@ -81,34 +80,8 @@ module.exports = class GitlabAdapter {
         };
     }
 
-    async getMergeRequestByProjectIdAndMergeRequestId(projectId, mergeRequestId) {
-        return Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/merge_requests/${mergeRequestId}`, {
-            ...this.gotDefaultOptions
-        });
-    }
-
-    async getIssueByProjectIdAndIssueId(projectId, issueId) {
-        return Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/issues/${issueId}`, {
-            ...this.gotDefaultOptions
-        });
-    }
-
-    async getTagByProjectIdAndTagId(projectId, tagName) {
-        const response = await Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/tags/${tagName}`, {
-            ...this.gotDefaultOptions
-        });
-        return response.body;
-    }
-
-    async getCommitByProjectIdAndSha(projectId, sha) {
-        const response = await Got.get(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/commits/${sha}`, {
-            ...this.gotDefaultOptions
-        });
-        return response.body;
-    }
-
     async findCommitRefsByProjectIdAndSha(projectId, sha, query) {
-        const queryString = query ? QueryString.stringify(query) : null;
+        const queryString = query ? new URLSearchParams(query).toString() : null;
         const response = await Got.get(
             `${this.GITLAB_API_ENDPOINT}/projects/${projectId}/repository/commits/${sha}/refs${
                 queryString ? `?${queryString}` : ""

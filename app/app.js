@@ -42,7 +42,7 @@ module.exports = class GitLabReleaseNoteGenerator {
             { name: "issues", title: "Closed issues", default: true },
             { name: "mergeRequests", title: "Merged merge requests", default: true }
         ];
-        const DecoratorFactory = require("./decorator");
+        const DecoratorFactory = require("./decorators");
         const decorator = new DecoratorFactory({
             SERVICE_PROVIDER: this.config.SERVICE_PROVIDER,
             loggerService: this.logger
@@ -54,7 +54,7 @@ module.exports = class GitLabReleaseNoteGenerator {
         const content = decorator.generateContent();
         this.logger.debug(`(${this.config.SERVICE_PROVIDER} format) Changelog: ${content}`);
 
-        const PublisherFactory = require("./publisher");
+        const PublisherFactory = require("./publishers");
         const publisher = new PublisherFactory({
             SERVICE_PROVIDER: this.config.SERVICE_PROVIDER,
             gitlabAdapter: this.gitlabAdapter,
