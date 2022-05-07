@@ -5,7 +5,9 @@ const BaseDecorator = require("./base");
 
 module.exports = class GitlabDecorator extends BaseDecorator {
     constructor({ changelog, labelConfigs, tz }) {
-        super({ changelog, labelConfigs, tz });
+        super({ labelConfigs });
+        this.changelog = changelog;
+        this.tz = tz;
     }
     generateContent() {
         let { issues, mergeRequests } = this.changelog;

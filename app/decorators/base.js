@@ -1,10 +1,8 @@
 const _ = require("lodash");
 
 module.exports = class BaseDecorator {
-    constructor({ changelog, labelConfigs, tz }) {
-        this.changelog = changelog;
+    constructor({ labelConfigs }) {
         this.labelConfigs = labelConfigs;
-        this.tz = tz;
         this.labelBucket = { issues: [], mergeRequests: [] };
         for (const labelConfigItem of this.labelConfigs) {
             this.labelBucket[labelConfigItem.name] = [];

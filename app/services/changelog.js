@@ -14,24 +14,29 @@ module.exports = class ChangelogService {
                 this.config.TZ
             )} and ${Moment.tz(endDate, this.config.TZ)}`
         );
-        const mergeRequests = await this.gitlabRepository.findMergeRequestsByProjectIdStateStartDateAndEndDate(
+        let mergeRequests = await this.gitlabRepository.findMergeRequestsByProjectIdStateStartDateAndEndDate(
             this.config.GITLAB_PROJECT_ID,
             "merged",
             startDate,
             endDate
         );
+        mergeRequests = mergeRequests.filter((mergeRequest) =>
+            Moment.tz(mergeRequest.merged_at, this.config.TZ).isBetween(startDate, endDate, "second", "[]")
+        );
         this.logger.info(`Found ${mergeRequests ? mergeRequests.length : 0} merge requests`);
-        const issues = await this.gitlabRepository.findIssuesByProjectIdStateStartDateAndEndDate(
+        let issues = await this.gitlabRepository.findIssuesByProjectIdStateStartDateAndEndDate(
             this.config.GITLAB_PROJECT_ID,
             "closed",
             startDate,
             endDate
         );
+        issues = issues.filter((issue) =>
+            Moment.tz(issue.closed_at, this.config.TZ).isBetween(startDate, endDate, "second", "[]")
+        );
         this.logger.info(`Found ${issues ? issues.length : 0} issues`);
         return {
             mergeRequests,
-            issues,
-            releaseDate: endDate
+            issues
         };
     }
 };

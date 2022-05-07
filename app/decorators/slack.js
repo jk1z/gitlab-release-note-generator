@@ -4,7 +4,9 @@ const BaseDecorator = require("./base");
 
 module.exports = class SlackDecorator extends BaseDecorator {
     constructor({ changelog, labelConfigs, tz }) {
-        super({ changelog, labelConfigs, tz });
+        super({ labelConfigs });
+        this.changelog = changelog;
+        this.tz = tz;
     }
     generateContent() {
         let { issues, mergeRequests } = this.changelog;
@@ -15,7 +17,7 @@ module.exports = class SlackDecorator extends BaseDecorator {
             return {
                 message: this.decorateMergeRequest(mergeRequest),
                 labels: [...mergeRequest.labels],
-                defaultLabel: "mergeRequest"
+                defaultLabel: "mergeRequests"
             };
         });
         this.populateContentBucketByContents([...issues, ...mergeRequests]);

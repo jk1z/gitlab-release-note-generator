@@ -45,7 +45,7 @@ module.exports = class GitlabAdapter {
             query
         );
         return {
-            mergeRequests: response.body,
+            mergeRequests: response.body || [],
             _link: linkObj
         };
     }
@@ -60,7 +60,7 @@ module.exports = class GitlabAdapter {
         );
         const linkObj = this._decorateLinks(response.headers.link, this.searchIssuesByProjectId, [projectId], query);
         return {
-            issues: response.body,
+            issues: response.body || [],
             _link: linkObj
         };
     }

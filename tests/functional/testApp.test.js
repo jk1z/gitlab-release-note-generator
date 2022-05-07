@@ -15,7 +15,7 @@ describe("Gitlab release note generator", () => {
             let searchIssueNock;
             let container;
             beforeAll(async () => {
-                GitLabPublisher.mockClear();
+                jest.resetAllMocks();
                 const GITLAB_API_ENDPOINT = "https://gitlab.com/api/v4";
                 const GITLAB_PROJECT_ID = "12345678";
                 searchTagsNock = Nock(GITLAB_API_ENDPOINT)

@@ -27,7 +27,7 @@ module.exports = class GitlabRepository {
         });
         while (_.get(_link, "next")) {
             const res = await _link.next();
-            issues = [...issues, res.issues];
+            issues.push(...res.issues);
             _link = res._link;
         }
         return issues;

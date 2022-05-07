@@ -26,16 +26,10 @@ module.exports = class GitLabReleaseNoteGenerator {
         if (this.config.ISSUE_CLOSED_SECONDS > 0) {
             this.logger.debug(`EndDate: ${endDate}`);
             this.logger.debug(`Adding Seconds: ${this.config.ISSUE_CLOSED_SECONDS}`);
-            endDate = Moment.tz(endDate, this.config.TZ)
-                .add(this.config.ISSUE_CLOSED_SECONDS, "seconds")
-                .utc()
-                .format();
+            endDate = Moment.tz(endDate, this.config.TZ).add(this.config.ISSUE_CLOSED_SECONDS, "seconds").toISOString();
             this.logger.debug(`New End Date: ${endDate}`);
         }
-        const { mergeRequests, issues, releaseDate } = await this.changelogService.getChangelogByStartAndEndDate(
-            startDate,
-            endDate
-        );
+        const { mergeRequests, issues } = await this.changelogService.getChangelogByStartAndEndDate(startDate, endDate);
 
         const labelConfigs = [
             ...Constants.LABEL_CONFIG,
@@ -47,7 +41,7 @@ module.exports = class GitLabReleaseNoteGenerator {
             SERVICE_PROVIDER: this.config.SERVICE_PROVIDER,
             loggerService: this.logger
         }).create({
-            changelog: { mergeRequests, issues, releaseDate },
+            changelog: { mergeRequests, issues, releaseDate: endDate },
             labelConfigs,
             tz: this.config.TZ
         });
