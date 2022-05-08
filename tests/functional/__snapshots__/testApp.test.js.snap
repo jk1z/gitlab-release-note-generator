@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gitlab release note generator #run Sunny scenario publisher should publish release note 1`] = `
+Object {
+  "content": "### Release note (2012-05-27)
+#### Closed issues
+- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)
+#### Merged merge requests
+- test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))
+",
+  "projectId": "12345678",
+  "tag": Object {
+    "commit": Object {
+      "author_email": "john@example.com",
+      "author_name": "John Smith",
+      "authored_date": "2012-05-27T04:42:42Z",
+      "committed_date": "2012-05-27T04:42:42Z",
+      "committer_email": "jack@example.com",
+      "committer_name": "Jack Smith",
+      "created_at": "2012-05-27T04:42:42Z",
+      "id": "ec0b4f0b5c90ed0fa911a2972ccc452641b31563",
+      "message": "Initial commit",
+      "parent_ids": Array [
+        "2a4b78934375d7f53875269ffd4f45fd83a84ebe",
+      ],
+      "short_id": "41b31563",
+      "title": "Initial commit",
+    },
+    "message": null,
+    "name": "v1.1.0",
+    "release": Object {
+      "description": "Amazing release. Wow",
+      "tag_name": "1.1.0",
+    },
+    "target": "ec0b4f0b5c90ed0fa911a2972ccc452641b31563",
+  },
+}
+`;

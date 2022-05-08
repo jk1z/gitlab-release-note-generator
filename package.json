@@ -3,6 +3,9 @@
   "version": "1.2.5",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "16.14.2"
+  },
   "scripts": {
     "start": "node app/index.js",
     "test": "jest tests/",
@@ -20,21 +23,24 @@
   },
   "homepage": "https://github.com/jk1z/GitLab-Release-Note-Generator#readme",
   "dependencies": {
-    "chalk": "2.4.2",
-    "lodash": "4.17.15",
-    "moment-timezone": "0.5.25",
-    "parse-link-header": "1.0.1",
-    "request": "2.88.0",
-    "request-promise-native": "1.0.7"
+    "awilix": "7.0.1",
+    "chalk": "4.1.2",
+    "got": "11.8.3",
+    "lodash": "4.17.21",
+    "moment-timezone": "0.5.34",
+    "parse-link-header": "2.0.0",
+    "yargs": "17.4.1"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.13",
-    "eslint": "^5.16.0",
-    "faker": "^4.1.0",
-    "jest": "^24.8.0",
-    "jest-when": "^2.6.0",
-    "mockdate": "^2.0.2",
-    "nock": "^10.0.6",
-    "prettier": "1.17.1"
+    "eslint": "^8.12.0",
+    "eslint-plugin-jest": "^26.1.5",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "faker": "5.5.3",
+    "jest": "27.5.1",
+    "jest-when": "3.5.1",
+    "mockdate": "3.0.5",
+    "nock": "13.2.4",
+    "prettier": "2.6.1"
   }
 }

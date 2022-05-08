@@ -1,0 +1,209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Changelog service #getChangelogByStartAndEndDate should call findIssuesByProjectIdStateStartDateAndEndDate 1`] = `
+Array [
+  "12345",
+  "closed",
+  "2018-09-07T11:15:17.520Z",
+  "2018-10-07T11:15:17.520Z",
+]
+`;
+
+exports[`Changelog service #getChangelogByStartAndEndDate should call findMergeRequestsByProjectIdStateStartDateAndEndDate 1`] = `
+Array [
+  "12345",
+  "merged",
+  "2018-09-07T11:15:17.520Z",
+  "2018-10-07T11:15:17.520Z",
+]
+`;
+
+exports[`Changelog service #getChangelogByStartAndEndDate should log info 1`] = `
+Array [
+  Array [
+    "Time range that we are looking at MRs and issues is between Fri Sep 07 2018 21:15:17 GMT+1000 and Sun Oct 07 2018 22:15:17 GMT+1100",
+  ],
+  Array [
+    "Found 1 merge requests",
+  ],
+  Array [
+    "Found 1 issues",
+  ],
+]
+`;
+
+exports[`Changelog service #getChangelogByStartAndEndDate should return issues and merge requests 1`] = `
+Array [
+  Object {
+    "allow_collaboration": false,
+    "allow_maintainer_to_push": false,
+    "approvals_before_merge": null,
+    "assignee": Object {
+      "avatar_url": null,
+      "id": 1,
+      "name": "Administrator",
+      "state": "active",
+      "username": "admin",
+      "web_url": "https://gitlab.example.com/admin",
+    },
+    "assignees": Array [
+      Object {
+        "avatar_url": "http://www.gravatar.com/avatar/46f6f7dc858ada7be1853f7fb96e81da?s=80&d=identicon",
+        "id": 12,
+        "name": "Miss Monserrate Beier",
+        "state": "active",
+        "username": "axel.block",
+        "web_url": "https://gitlab.example.com/axel.block",
+      },
+    ],
+    "author": Object {
+      "avatar_url": null,
+      "id": 1,
+      "name": "Administrator",
+      "state": "active",
+      "username": "admin",
+      "web_url": "https://gitlab.example.com/admin",
+    },
+    "closed_at": null,
+    "closed_by": null,
+    "created_at": "2017-04-29T08:46:00Z",
+    "description": "fixed login page css paddings",
+    "discussion_locked": null,
+    "downvotes": 0,
+    "force_remove_source_branch": false,
+    "id": 1,
+    "iid": 1,
+    "labels": Array [
+      "features",
+    ],
+    "merge_commit_sha": null,
+    "merge_status": "can_be_merged",
+    "merge_when_pipeline_succeeds": true,
+    "merged_at": "2018-09-07T11:16:17.520Z",
+    "merged_by": Object {
+      "avatar_url": "https://gitlab.example.com/uploads/-/system/user/avatar/87854/avatar.png",
+      "id": 87854,
+      "name": "Douwe Maan",
+      "state": "active",
+      "username": "DouweM",
+      "web_url": "https://gitlab.com/DouweM",
+    },
+    "milestone": Object {
+      "created_at": "2015-02-02T19:49:26.013Z",
+      "description": "Assumenda aut placeat expedita exercitationem labore sunt enim earum.",
+      "due_date": "2018-09-22",
+      "id": 5,
+      "iid": 1,
+      "project_id": 3,
+      "start_date": "2018-08-08",
+      "state": "closed",
+      "title": "v2.0",
+      "updated_at": "2015-02-02T19:49:26.013Z",
+      "web_url": "https://gitlab.example.com/my-group/my-project/milestones/1",
+    },
+    "project_id": 3,
+    "sha": "8888888888888888888888888888888888888888",
+    "should_remove_source_branch": true,
+    "source_branch": "test1",
+    "source_project_id": 2,
+    "squash": false,
+    "state": "merged",
+    "target_branch": "master",
+    "target_project_id": 3,
+    "time_stats": Object {
+      "human_time_estimate": null,
+      "human_total_time_spent": null,
+      "time_estimate": 0,
+      "total_time_spent": 0,
+    },
+    "title": "Mock merge request 1",
+    "updated_at": "2017-04-29T08:46:00Z",
+    "upvotes": 0,
+    "user_notes_count": 1,
+    "web_url": "http://gitlab.example.com/my-group/my-project/merge_requests/1",
+    "work_in_progress": false,
+  },
+]
+`;
+
+exports[`Changelog service #getChangelogByStartAndEndDate should return issues and merge requests 2`] = `
+Array [
+  Object {
+    "_links": Object {
+      "award_emoji": "http://example.com/api/v4/projects/1/issues/76/award_emoji",
+      "notes": "\`http://example.com/\`api/v4/projects/1/issues/76/notes",
+      "project": "http://example.com/api/v4/projects/1",
+      "self": "http://example.com/api/v4/projects/1/issues/76",
+    },
+    "assignee": Object {
+      "avatar_url": null,
+      "id": 1,
+      "name": "Administrator",
+      "state": "active",
+      "username": "root",
+      "web_url": "https://gitlab.example.com/root",
+    },
+    "assignees": Array [
+      Object {
+        "avatar_url": null,
+        "id": 1,
+        "name": "Administrator",
+        "state": "active",
+        "username": "root",
+        "web_url": "https://gitlab.example.com/root",
+      },
+    ],
+    "author": Object {
+      "avatar_url": null,
+      "id": 18,
+      "name": "Alexandra Bashirian",
+      "state": "active",
+      "username": "eileen.lowe",
+      "web_url": "https://gitlab.example.com/eileen.lowe",
+    },
+    "closed_at": "2018-09-07T12:15:17.520Z",
+    "closed_by": null,
+    "confidential": false,
+    "created_at": "2016-01-04T15:31:51.081Z",
+    "description": "Ratione dolores corrupti mollitia soluta quia.",
+    "discussion_locked": false,
+    "downvotes": 0,
+    "due_date": "2016-07-22",
+    "has_tasks": true,
+    "id": 75,
+    "iid": 5,
+    "labels": Array [
+      "foo",
+      "bar",
+    ],
+    "merge_requests_count": 0,
+    "milestone": Object {
+      "created_at": "2016-01-04T15:31:39.996Z",
+      "description": "Ducimus nam enim ex consequatur cumque ratione.",
+      "due_date": null,
+      "id": 17,
+      "iid": 2,
+      "project_id": 1,
+      "state": "closed",
+      "title": "v4.0",
+      "updated_at": "2016-01-04T15:31:39.996Z",
+    },
+    "project_id": 1,
+    "state": "closed",
+    "subscribed": false,
+    "task_status": "10 of 15 tasks completed",
+    "time_stats": Object {
+      "human_time_estimate": null,
+      "human_total_time_spent": null,
+      "time_estimate": 0,
+      "total_time_spent": 0,
+    },
+    "title": "Mock Issue 1",
+    "updated_at": "2016-01-04T15:31:51.081Z",
+    "upvotes": 4,
+    "user_notes_count": 1,
+    "web_url": "http://example.com/example/example/issues/5",
+    "weight": null,
+  },
+]
+`;

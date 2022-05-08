@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GitLab publisher #publish should create release note if release note is missing 1`] = `"Creating a new release note"`;
+
+exports[`GitLab publisher #publish should create release note if release note is missing 2`] = `
+Array [
+  "123",
+  "v1.1.0",
+  Object {
+    "description": "### Release note (2012-05-27)
+#### Closed issues
+- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)
+#### Merged merge requests
+- test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))
+",
+  },
+]
+`;
+
+exports[`GitLab publisher #publish should update release note if release note exists 1`] = `"Updating the release note"`;
+
+exports[`GitLab publisher #publish should update release note if release note exists 2`] = `
+Array [
+  "123",
+  "v1.1.0",
+  Object {
+    "description": "### Release note (2012-05-27)
+#### Closed issues
+- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)
+#### Merged merge requests
+- test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))
+",
+  },
+]
+`;

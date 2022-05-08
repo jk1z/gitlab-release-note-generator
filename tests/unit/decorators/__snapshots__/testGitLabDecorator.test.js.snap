@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Gitlab Decorator #decorateIssue should format issue 1`] = `"- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)"`;
+
+exports[`Gitlab Decorator #decorateMergeRequest should format merge request 1`] = `"- test1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))"`;
+
+exports[`Gitlab Decorator #generateContent should generate release note content 1`] = `
+"### Release note (2022-05-08)
+#### Closed issues
+- Mock Issue 1 [#5](http://example.com/example/example/issues/5)
+#### Merged merge requests
+- Mock merge request 2 [#2](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))
+#### Features
+- Mock merge request 1 [#1](http://gitlab.example.com/my-group/my-project/merge_requests/1) ([admin](https://gitlab.example.com/admin))
+#### Bug Fixes
+- mock issue 2 [#6](http://example.com/example/example/issues/6)
+"
+`;
