@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Base decorator #populateContentBucketByContents should populate content buckets with custom label configs 1`] = `
+Object {
+  "features": Array [
+    "mock feature message",
+  ],
+  "fixes": Array [
+    "mock fixes message",
+  ],
+  "issues": Array [],
+  "mergeRequests": Array [],
+}
+`;
+
+exports[`Base decorator #populateContentBucketByContents should populate content buckets with default label configs 1`] = `
+Object {
+  "issues": Array [
+    "mock issue message",
+  ],
+  "mergeRequests": Array [
+    "mock MR message",
+  ],
+}
+`;
+
+exports[`Base decorator #populateContentBucketByContents should populate content buckets with mixed label configs 1`] = `
+Object {
+  "features": Array [
+    "mock feature message",
+  ],
+  "fixes": Array [
+    "mock fixes message",
+  ],
+  "issues": Array [
+    "mock normal issue message",
+  ],
+  "mergeRequests": Array [
+    "mock normal MR message",
+  ],
+}
+`;

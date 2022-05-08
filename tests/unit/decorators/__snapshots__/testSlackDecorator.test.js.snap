@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slack Decorator #decorateIssue should format issue 1`] = `"- Consequatur vero maxime deserunt laboriosam est voluptas dolorem. <http://example.com/example/example/issues/6|#6>"`;
+
+exports[`Slack Decorator #decorateMergeRequest should format merge request 1`] = `"- test1 <http://gitlab.example.com/my-group/my-project/merge_requests/1|#1> (<https://gitlab.example.com/admin|admin>)"`;
+
+exports[`Slack Decorator #generateContent should generate release note content 1`] = `
+"*Release note (2022-05-08)*
+*Closed issues*
+- Mock Issue 1 <http://example.com/example/example/issues/5|#5>*Merged merge requests*
+- Mock merge request 2 <http://gitlab.example.com/my-group/my-project/merge_requests/1|#2> (<https://gitlab.example.com/admin|admin>)*Features*
+- Mock merge request 1 <http://gitlab.example.com/my-group/my-project/merge_requests/1|#1> (<https://gitlab.example.com/admin|admin>)*Bug Fixes*
+- mock issue 2 <http://example.com/example/example/issues/6|#6>"
+`;

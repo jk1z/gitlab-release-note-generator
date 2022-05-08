@@ -7,7 +7,7 @@ describe("Slack Decorator", () => {
         test("should generate release note content", () => {
             const slackDecorator = new SlackDecorator({
                 changelog: {
-                    issues: [IssueFixture.issueDefault, IssueFixture.issueDefaultOther],
+                    issues: [IssueFixture.issueDefault(), IssueFixture.issueDefaultOther()],
                     mergeRequests: [
                         MergeRequestFixture.mergeRequestDefault(),
                         MergeRequestFixture.mergeRequestDefaultOther()
@@ -19,7 +19,8 @@ describe("Slack Decorator", () => {
                     { name: "features", title: "Features" },
                     { name: "fixes", title: "Bug Fixes" }
                 ],
-                tz: "Australia/Melbourne"
+                tz: "Australia/Melbourne",
+                releaseDate: "2020-01-04T15:31:39.996Z"
             });
             const releaseNote = slackDecorator.generateContent();
             expect(releaseNote).toMatchSnapshot();
@@ -36,7 +37,8 @@ describe("Slack Decorator", () => {
                     { name: "issues", title: "Closed issues", default: true },
                     { name: "mergeRequests", title: "Merged merge requests", default: true }
                 ],
-                tz: "Australia/Melbourne"
+                tz: "Australia/Melbourne",
+                releaseDate: "2020-01-04T15:31:39.996Z"
             });
             const issue = slackDecorator.decorateIssue({
                 state: "opened",
@@ -126,7 +128,8 @@ describe("Slack Decorator", () => {
                     { name: "issues", title: "Closed issues", default: true },
                     { name: "mergeRequests", title: "Merged merge requests", default: true }
                 ],
-                tz: "Australia/Melbourne"
+                tz: "Australia/Melbourne",
+                releaseDate: "2020-01-04T15:31:39.996Z"
             });
             const issue = slackDecorator.decorateMergeRequest({
                 id: 1,

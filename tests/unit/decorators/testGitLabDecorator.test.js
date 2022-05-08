@@ -18,7 +18,8 @@ describe("Gitlab Decorator", () => {
                     { name: "features", title: "Features" },
                     { name: "fixes", title: "Bug Fixes" }
                 ],
-                tz: "Australia/Melbourne"
+                tz: "Australia/Melbourne",
+                releaseDate: "2020-01-04T15:31:39.996Z"
             });
             const releaseNote = gitlabDecorator.generateContent();
             expect(releaseNote).toMatchSnapshot();
@@ -35,7 +36,8 @@ describe("Gitlab Decorator", () => {
                     { name: "issues", title: "Closed issues", default: true },
                     { name: "mergeRequests", title: "Merged merge requests", default: true }
                 ],
-                tz: "Australia/Melbourne"
+                tz: "Australia/Melbourne",
+                releaseDate: "2020-01-04T15:31:39.996Z"
             });
             const issue = gitlabDecorator.decorateIssue({
                 state: "opened",
@@ -125,7 +127,8 @@ describe("Gitlab Decorator", () => {
                     { name: "issues", title: "Closed issues", default: true },
                     { name: "mergeRequests", title: "Merged merge requests", default: true }
                 ],
-                tz: "Australia/Melbourne"
+                tz: "Australia/Melbourne",
+                releaseDate: "2020-01-04T15:31:39.996Z"
             });
             const issue = gitlabDecorator.decorateMergeRequest({
                 id: 1,
