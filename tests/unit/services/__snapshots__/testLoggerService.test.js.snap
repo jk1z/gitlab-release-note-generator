@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logger service should log debug 1`] = `"[97m2018-09-07T21:16:17+10:00 [DEBUG] test[39m"`;
+
+exports[`Logger service should log error 1`] = `"[91m2018-09-07T21:16:17+10:00 [ERROR] test[39m"`;
+
+exports[`Logger service should log info 1`] = `"[92m2018-09-07T21:16:17+10:00 [INFO] test[39m"`;
+
+exports[`Logger service should log warn 1`] = `"[93m2018-09-07T21:16:17+10:00 [WARN] test[39m"`;

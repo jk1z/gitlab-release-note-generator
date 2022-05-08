@@ -19,7 +19,7 @@ describe("GitLab publisher", () => {
         test("should update release note if release note exists", async () => {
             await gitLabPublisher.publish({
                 projectId: "123",
-                tag: TagFixture.tags[0],
+                tag: TagFixture.tagDefault(),
                 content: `### Release note (2012-05-27)
 #### Closed issues
 - Consequatur vero maxime deserunt laboriosam est voluptas dolorem. [#6](http://example.com/example/example/issues/6)
@@ -35,7 +35,7 @@ describe("GitLab publisher", () => {
             expect(gitLabAdapterInstance.updateTagReleaseByProjectIdTagNameAndTagId.mock.calls[0]).toMatchSnapshot();
         });
         test("should create release note if release note is missing", async () => {
-            const mockTag = JSON.parse(JSON.stringify(TagFixture.tags[0]));
+            const mockTag = JSON.parse(JSON.stringify(TagFixture.tagDefault()));
             delete mockTag.release;
             await gitLabPublisher.publish({
                 projectId: "123",

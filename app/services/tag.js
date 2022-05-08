@@ -14,22 +14,22 @@ module.exports = class TagService {
         const latestTag = tags.shift();
         this.logger.info(`Latest tag is ${latestTag.name}`);
 
+        if (!this.isTagsMatchTargetTagRegex([latestTag], this.config.TARGET_TAG_REGEX))
+            throw new Error(
+                `Latest tag doesn't match with the regex. Target tag regex ${this.config.TARGET_TAG_REGEX}`
+            );
+        const latestBranches = await this.gitlabRepository.findBranchRefsByProjectIdAndSha(
+            this.projectId,
+            latestTag.commit?.id
+        );
+        if (!this.isBranchesInTargetBranch(latestBranches, this.config.TARGET_BRANCH))
+            throw new Error(`Latest tag doesn't contain target branch. Target branch ${this.config.TARGET_BRANCH}`);
+
         if (tags.length === 0) {
             const project = await this.gitlabRepository.findRepoByProjectId(this.projectId);
             this.logger.info("No more tag is found. Assuming project creation date is the start date");
             return [latestTag, { commit: { committed_date: project.created_at } }];
         } else {
-            if (!this.isTagsMatchTargetTagRegex([latestTag], this.config.TARGET_TAG_REGEX))
-                throw new Error(
-                    `Latest tag doesn't match with the regex. Target tag regex ${this.config.TARGET_TAG_REGEX}`
-                );
-            const latestBranches = await this.gitlabRepository.findBranchRefsByProjectIdAndSha(
-                this.projectId,
-                latestTag.commit?.id
-            );
-            if (!this.isBranchesInTargetBranch(latestBranches, this.config.TARGET_BRANCH))
-                throw new Error(`Latest tag doesn't contain target branch. Target branch ${this.config.TARGET_BRANCH}`);
-
             let secondLatestTag = null;
             let page = 0;
             while (!secondLatestTag) {
@@ -39,16 +39,12 @@ module.exports = class TagService {
                             this.projectId,
                             latestTag.commit?.id
                         );
-                        for (const branch of branches) {
-                            if (this.isBranchesInTargetBranch(latestBranches, branch.name)) {
-                                this.logger.info(
-                                    `Found the second latest tag on page ${page + 1}. The second latest tag is ${
-                                        tag.name
-                                    }`
-                                );
-                                secondLatestTag = tag;
-                                break;
-                            }
+                        if (this.isBranchesInTargetBranch(branches, this.config.TARGET_BRANCH)) {
+                            this.logger.info(
+                                `Found the second latest tag on page ${page + 1}. The second latest tag is ${tag.name}`
+                            );
+                            secondLatestTag = tag;
+                            break;
                         }
                     }
                     if (secondLatestTag) break;

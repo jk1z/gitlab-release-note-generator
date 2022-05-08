@@ -3,6 +3,9 @@ const Nock = require("nock");
 const Constants = require("../../app/constants");
 const { asValue } = require("awilix");
 const GitLabPublisher = require("../../app/publishers/gitlab");
+
+const TagFixtures = require("../fixtures/tag");
+
 jest.mock("../../app/publishers/gitlab");
 
 describe("Gitlab release note generator", () => {
@@ -13,6 +16,7 @@ describe("Gitlab release note generator", () => {
             let getProjectNock;
             let searchMRNock;
             let searchIssueNock;
+            let searchRefs;
             let container;
             beforeAll(async () => {
                 jest.resetAllMocks();
@@ -20,32 +24,13 @@ describe("Gitlab release note generator", () => {
                 const GITLAB_PROJECT_ID = "12345678";
                 searchTagsNock = Nock(GITLAB_API_ENDPOINT)
                     .get(`/projects/${GITLAB_PROJECT_ID}/repository/tags`)
-                    .reply(200, [
-                        {
-                            commit: {
-                                id: "2695effb5807a22ff3d138d593fd856244e155e7",
-                                short_id: "2695effb",
-                                title: "Initial commit",
-                                created_at: "2012-05-27T04:42:42Z",
-                                parent_ids: ["2a4b78934375d7f53875269ffd4f45fd83a84ebe"],
-                                message: "Initial commit",
-                                author_name: "John Smith",
-                                author_email: "john@example.com",
-                                authored_date: "2012-05-27T04:42:42Z",
-                                committer_name: "Jack Smith",
-                                committer_email: "jack@example.com",
-                                committed_date: "2012-05-27T04:42:42Z"
-                            },
-                            release: {
-                                tag_name: "1.0.0",
-                                description: "Amazing release. Wow"
-                            },
-                            name: "v1.0.0",
-                            target: "2695effb5807a22ff3d138d593fd856244e155e7",
-                            message: null
-                        }
-                    ])
+                    .reply(200, [TagFixtures.tagDefault()])
                     .persist();
+                searchRefs = Nock(GITLAB_API_ENDPOINT)
+                    .get(
+                        "/projects/12345678/repository/commits/ec0b4f0b5c90ed0fa911a2972ccc452641b31563/refs?type=branch"
+                    )
+                    .reply(200, [{ type: "branch", name: "master" }]);
                 // Mock repo api
                 getProjectNock = Nock(GITLAB_API_ENDPOINT)
                     .get(`/projects/${GITLAB_PROJECT_ID}`)
