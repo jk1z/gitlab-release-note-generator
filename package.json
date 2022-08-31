@@ -27,7 +27,7 @@
     "chalk": "4.1.2",
     "got": "11.8.3",
     "lodash": "4.17.21",
-    "moment-timezone": "0.5.34",
+    "moment-timezone": "0.5.35",
     "parse-link-header": "2.0.0",
     "yargs": "17.4.1"
   },
