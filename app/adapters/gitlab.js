@@ -94,7 +94,7 @@ module.exports = class GitlabAdapter {
     async createTagReleaseByProjectIdTagNameAndTagId(projectId, tagName, body) {
         const response = await Got.post(`${this.GITLAB_API_ENDPOINT}/projects/${projectId}/releases`, {
             ...this.gotDefaultOptions,
-            json: { ...body, tagName }
+            json: { ...body, tag_name: tagName }
         });
         return response.body;
     }

@@ -23,7 +23,7 @@ A Gitlab release note generator that generates release note on latest tag
 5. Generate a release note/changelog based on the findings above.
 
 ## Software requirement
-- NodeJS ^10.x.x OR docker
+- NodeJS ^16.x.x OR docker
 - A gitlab personal access token with `api` permission. [How to Tutorial](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html)
 
 ## How to run this app
