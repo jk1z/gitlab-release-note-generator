@@ -10,7 +10,7 @@ const container = ConfigureContainer();
 (async () => {
     try {
         let env = null;
-        if (process.env.GITLAB_API_ENDPOINT && process.env.GITLAB_PROJECT_ID) {
+        if (process.env.GITLAB_PERSONAL_TOKEN && process.env.GITLAB_PROJECT_ID) {
             // eslint-disable-next-line no-console
             console.log(`Detected environment variable. Skipping CLI command.`);
             env = process.env;
